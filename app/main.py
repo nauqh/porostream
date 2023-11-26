@@ -98,7 +98,7 @@ with st.sidebar:
         ['Ranked Flex'])
 
     summoner = st.selectbox(
-        'Bounded Relationship Only (B.R.O)',
+        '🔒Bounded Relationship Only (B.R.O)',
         ('Thánh Chặt Xác', 'Cozy Bearrrrr', 'indestructibleVN', 'Obiwan', 'Wavepin', 'Tupac Shaco'), index=None)
 
     run = st.button("Find out")
