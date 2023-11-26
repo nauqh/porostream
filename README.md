@@ -1,4 +1,4 @@
-# Porobot - League of Legends Discord Bot 
+# Porostream - League of Legends Streaming Dashboard 
 
 ![Python](https://img.shields.io/badge/Made%20With-Python%203.11-blue.svg?style=for-the-badge&logo=Python&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)

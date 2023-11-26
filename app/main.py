@@ -6,7 +6,7 @@ import pandas as pd
 
 
 st.set_page_config(
-    page_title="Porobot",
+    page_title="Porostream",
     page_icon="img/favicon.png",
     layout="wide")
 
