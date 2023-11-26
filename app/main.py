@@ -96,7 +96,10 @@ with st.sidebar:
 if run:
     st.subheader("⌛Extracting data from RIOT API")
     TOKEN = settings.TOKEN
-    puuid = puuids[summoner]
+    try:
+        puuid = puuids[summoner]
+    except Exception:
+        st.subheader("💀Summoner has not been added")
 
     summoner, name = get_info(TOKEN, puuid)
     ids = get_match_ids(TOKEN, puuid, 10, queue_id=440)
