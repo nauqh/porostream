@@ -28,7 +28,7 @@ with st.sidebar:
 
 # TODO: Main
 st.markdown("""<h1 style='
-                font-family: Recoleta-Regular; font-weight: 400; color: #C89B3C;
+                font-family: Recoleta-Regular; font-weight: 400; color: #ffc300;
                 font-size: 3.5rem'>How Bad Is Your League</h1>""",
             unsafe_allow_html=True)
 
