@@ -60,11 +60,11 @@ with tab1:
 
     with r:
         tru = df.groupby('summonerName')[
-            'trueDamageDealtToChampions'].sum().to_dict()
+            'trueDamageDealtToChampions'].mean().to_dict()
         phy = df.groupby('summonerName')[
-            'physicalDamageDealtToChampions'].sum().to_dict()
+            'physicalDamageDealtToChampions'].mean().to_dict()
         mag = df.groupby('summonerName')[
-            'magicDamageDealtToChampions'].sum().to_dict()
+            'magicDamageDealtToChampions'].mean().to_dict()
 
         names = list(tru.keys())
         physicals = list(phy.values())
