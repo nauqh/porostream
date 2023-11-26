@@ -51,24 +51,27 @@ tab1, tab2 = st.tabs(
     ["Damage on Champions", "Vision Score"])
 
 with tab1:
-    data = df.groupby('summonerName')[
-        'totalDamageDealtToChampions'].mean().to_dict()
-    fig = graph_dmg(data)
-    st.plotly_chart(fig, use_container_width=True)
+    l, r = st.columns([1, 1.5])
+    with l:
+        data = df.groupby('summonerName')[
+            'totalDamageDealtToChampions'].mean().to_dict()
+        fig = graph_dmg(data)
+        st.plotly_chart(fig, use_container_width=True)
 
-    tru = df.groupby('summonerName')[
-        'trueDamageDealtToChampions'].sum().to_dict()
-    phy = df.groupby('summonerName')[
-        'physicalDamageDealtToChampions'].sum().to_dict()
-    mag = df.groupby('summonerName')[
-        'magicDamageDealtToChampions'].sum().to_dict()
+    with r:
+        tru = df.groupby('summonerName')[
+            'trueDamageDealtToChampions'].sum().to_dict()
+        phy = df.groupby('summonerName')[
+            'physicalDamageDealtToChampions'].sum().to_dict()
+        mag = df.groupby('summonerName')[
+            'magicDamageDealtToChampions'].sum().to_dict()
 
-    names = list(tru.keys())
-    physicals = list(phy.values())
-    trues = list(tru.values())
-    magics = list(mag.values())
-    fig = graph_dmgproportion(names, trues, physicals, magics)
-    st.plotly_chart(fig, use_container_width=True)
+        names = list(tru.keys())
+        physicals = list(phy.values())
+        trues = list(tru.values())
+        magics = list(mag.values())
+        fig = graph_dmgproportion(names, trues, physicals, magics)
+        st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
     data = df.groupby('summonerName')['visionScore'].mean().to_dict()
