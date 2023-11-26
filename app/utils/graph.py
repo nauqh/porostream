@@ -63,7 +63,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         name='True Damage',
         orientation='h',
         marker=dict(
-            color='rgb(200, 155, 60)'
+            color='rgb(120, 90, 40)'
         ),
         hovertemplate='%{x}'
     ))
@@ -73,7 +73,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         name='Physical Damage',
         orientation='h',
         marker=dict(
-            color='rgb(200, 170, 110)'
+            color='rgb(200, 155, 60)'
         ),
         hovertemplate='%{x}'
     ))
@@ -83,7 +83,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         name='Magic Damage',
         orientation='h',
         marker=dict(
-            color='rgb(240, 230, 210)'
+            color='rgb(200, 170, 110)'
         ),
         hovertemplate='%{x}'
     ))
