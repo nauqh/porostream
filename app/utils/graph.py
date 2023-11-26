@@ -38,7 +38,7 @@ def graph_vision(data: dict):
     fig = go.Figure(data=go.Bar(x=names, y=vision,
                                 text=vision, textposition='outside', texttemplate='%{text:.2s}',
                                 marker=dict(
-                                    color=['#0397AB' if i == max_vis_index else '#ffc300' for i in names]),
+                                    color=['#fc7a57' if i == max_vis_index else '#ffc300' for i in names]),
                                 hovertemplate='Vision score: %{y}', name=''))
 
     # Update the layout for better visualization
