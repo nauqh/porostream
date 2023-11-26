@@ -39,7 +39,7 @@ def graph_vision(data: dict):
                                 text=vision, textposition='outside', texttemplate='%{text:.2s}',
                                 marker=dict(
                                     color=['#0397AB' if i == max_vis_index else '#C89B3C' for i in names]),
-                                hoverinfo='none', name=''))
+                                hovertemplate='%{y}', name=''))
 
     # Update the layout for better visualization
     fig.update_layout(title='Average Vision Score',
