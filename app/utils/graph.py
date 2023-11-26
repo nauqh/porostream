@@ -29,7 +29,7 @@ def graph_dmg(data: dict):
 
 
 def graph_vision(data: dict):
-    # Extract names and damages from the dictionary
+    # Extract names and vision from the dictionary
     names = list(data.keys())
     vision = list(data.values())
     max_vis_index = max(data, key=data.get)
