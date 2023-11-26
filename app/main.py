@@ -18,6 +18,14 @@ puuids = {
     'Wavepin': 'idASdW5eSrO5Oih-ViK07RdeXE33JM1Mm3FwV7JiveTwbqfjl1vQUvToJ95c1B4EeQd8BAZgXkGSUw'
 }
 
+if "run" not in st.session_state:
+    st.session_state['run'] = False
+
+
+def click_run():
+    st.session_state['run'] = True
+
+
 # TODO: Sidebar
 with st.sidebar:
     st.write("## 📝About the project")
@@ -102,9 +110,10 @@ with st.sidebar:
         'Choose summoner',
         ('Thánh Chặt Xác', 'Cozy Bearrrrr', 'indestructibleVN', 'Obiwan', 'Wavepin', 'Tupac Shaco'), index=None)
 
-    run = st.button("Find out")
+    run = st.button("Find out", on_click=click_run)
 
-if run:
+
+if run or st.session_state['run']:
     TOKEN = settings.TOKEN
     try:
         puuid = puuids[summoner]
