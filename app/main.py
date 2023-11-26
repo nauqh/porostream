@@ -97,7 +97,7 @@ with st.sidebar:
         ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
         ['Ranked Flex'])
 
-    st.header("🔒Bounded Relationship Only (B.R.O)")
+    st.header("🔒B.R.O")
     summoner = st.selectbox(
         'Choose summoner',
         ('Thánh Chặt Xác', 'Cozy Bearrrrr', 'indestructibleVN', 'Obiwan', 'Wavepin', 'Tupac Shaco'), index=None)
