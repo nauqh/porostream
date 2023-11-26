@@ -88,7 +88,7 @@ with tab2:
 with st.sidebar:
     st.header("🔍Search summoner")
     url = st.text_input(
-        "Enter summoner name and tag", "")
+        "Enter summoner name and tag", "Obiwan, #HYM")
     option = st.selectbox(
         'Choose your region',
         ('Asia', 'Europe', 'North America', 'Oceania'))
@@ -98,7 +98,7 @@ with st.sidebar:
         ['Ranked Flex'])
 
     summoner = st.selectbox(
-        'Select summoner',
+        'Bounded Relationship Only (B.R.O)',
         ('Thánh Chặt Xác', 'Cozy Bearrrrr', 'indestructibleVN', 'Obiwan', 'Wavepin', 'Tupac Shaco'), index=None)
 
     run = st.button("Find out")
