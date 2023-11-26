@@ -12,7 +12,7 @@ def graph_dmg(data: dict):
     fig = go.Figure(data=go.Bar(x=names, y=damages,
                                 text=damages, textposition='outside', texttemplate='%{text:,.0f}',
                                 marker=dict(
-                                    color=['#0397AB' if i == max_dmg_index else '#C89B3C' for i in names]),
+                                    color=['#1e96fc' if i == max_dmg_index else '#ffc300' for i in names]),
                                 hoverinfo='none', name=''))
 
     # Update the layout for better visualization
@@ -38,7 +38,7 @@ def graph_vision(data: dict):
     fig = go.Figure(data=go.Bar(x=names, y=vision,
                                 text=vision, textposition='outside', texttemplate='%{text:.2s}',
                                 marker=dict(
-                                    color=['#0397AB' if i == max_vis_index else '#C89B3C' for i in names]),
+                                    color=['#0397AB' if i == max_vis_index else '#ffc300' for i in names]),
                                 hovertemplate='Vision score: %{y}', name=''))
 
     # Update the layout for better visualization
@@ -63,7 +63,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         name='True Damage',
         orientation='h',
         marker=dict(
-            color='rgb(120, 90, 40)'
+            color='#ff9500'
         ),
         hovertemplate='%{x}'
     ))
@@ -73,7 +73,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         name='Physical Damage',
         orientation='h',
         marker=dict(
-            color='rgb(200, 155, 60)'
+            color='#ffc300'
         ),
         hovertemplate='%{x}'
     ))
@@ -83,7 +83,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         name='Magic Damage',
         orientation='h',
         marker=dict(
-            color='rgb(200, 170, 110)'
+            color='#ffea00'
         ),
         hovertemplate='%{x}'
     ))
