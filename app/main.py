@@ -127,7 +127,7 @@ if run:
                 ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
                 ['Ranked Flex', 'Nexus Blizt'])
             slider_val = st.slider(
-                "Number of games", min_value=0, max_value=20)
+                "Number of games", min_value=0, max_value=20, value=10)
             checkbox_val = st.checkbox("Permission for using summoner data")
 
             # Every form must have a submit button.
