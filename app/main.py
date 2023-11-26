@@ -104,60 +104,84 @@ with st.sidebar:
 
     run = st.button("Find out")
 
-if run:
-    TOKEN = settings.TOKEN
-    try:
-        puuid = puuids[summoner]
-    except Exception:
-        st.subheader("💀Summoner has not been added")
-    else:
-        st.subheader("⌛Extracting data from RIOT API")
+# if run:
+#     TOKEN = settings.TOKEN
+#     try:
+#         puuid = puuids[summoner]
+#     except Exception:
+st.subheader("💀Summoner has not been added")
+st.write("Submit a form to add your summoner")
+with st.form("my_form"):
+    key = st.text_input(
+        "Enter RIOT API key (optional)", "")
+    l, r = st.columns([1, 1])
+    with l:
+        url = st.text_input(
+            "Enter summoner name and tag", "Obiwan, #HYM")
+    with r:
+        option = st.selectbox(
+            'Choose your region',
+            ('Asia', 'Europe', 'North America', 'Oceania'))
+    game = st.multiselect(
+        'Choose game mode',
+        ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
+        ['Ranked Flex', 'Nexus Blizt'])
+    slider_val = st.slider("Number of games", min_value=0, max_value=20)
+    checkbox_val = st.checkbox("Permission for using summoner data")
 
-        summoner, name = get_info(TOKEN, puuid)
-        ids = get_match_ids(TOKEN, puuid, 10, queue_id=440)
-        match_df, player_df = gather_data(TOKEN, puuid, ids)
+    # Every form must have a submit button.
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        st.success("✅Submitted application")
 
-        stats = transform(match_df, player_df)
+    # else:
+    #     st.subheader("⌛Extracting data from RIOT API")
 
-        # NOTE: PROFILE
-        st.write("##")
-        l, r = st.columns([1, 2])
-        with l:
-            st.image(
-                f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png")
-        with r:
-            st.write("""<span style=' 
-                    font-weight: 200; font-size: 1rem'>SUMMONER PROFILE</span>""",
-                     unsafe_allow_html=True)
-            st.write(f"""<span style='
-                    font-family: Recoleta-Regular; font-weight: 400;
-                    font-size: 3rem'>{name['gameName']}</span>""",
-                     unsafe_allow_html=True)
-            st.write(f"`Level`: {summoner['summonerLevel']}")
-            st.write(f"`Tagline`: {name['tagLine']}")
+    #     summoner, name = get_info(TOKEN, puuid)
+    #     ids = get_match_ids(TOKEN, puuid, 10, queue_id=440)
+    #     match_df, player_df = gather_data(TOKEN, puuid, ids)
 
-        # NOTE: STATS
-        st.header("Summoner stats")
-        l, m, r = st.columns([1, 1, 1])
-        with l:
-            st.header("🎯Games")
-            st.subheader(
-                f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L")
-        with m:
-            st.header("🏆Winrates")
-            st.subheader(f"{round((stats['wins']/10), 2)*100} %")
-        with r:
-            st.header("⚔️KDA")
-            st.subheader(
-                f"{stats['kills']}/{stats['deaths']}/{stats['assists']}")
+    #     stats = transform(match_df, player_df)
 
-        l, m, r = st.columns([1, 1, 1])
-        with l:
-            st.header("🥊Damage")
-            st.subheader(stats['dmg'])
-        with m:
-            st.header("Pentakills")
-            st.subheader(stats['penta'])
-        with r:
-            st.header("💡Vision")
-            st.subheader(stats['vision'])
+    #     # NOTE: PROFILE
+    #     st.write("##")
+    #     l, r = st.columns([1, 2])
+    #     with l:
+    #         st.image(
+    #             f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png")
+    #     with r:
+    #         st.write("""<span style='
+    #                 font-weight: 200; font-size: 1rem'>SUMMONER PROFILE</span>""",
+    #                  unsafe_allow_html=True)
+    #         st.write(f"""<span style='
+    #                 font-family: Recoleta-Regular; font-weight: 400;
+    #                 font-size: 3rem'>{name['gameName']}</span>""",
+    #                  unsafe_allow_html=True)
+    #         st.write(f"`Level`: {summoner['summonerLevel']}")
+    #         st.write(f"`Tagline`: {name['tagLine']}")
+
+    #     # NOTE: STATS
+    #     st.header("Summoner stats")
+    #     l, m, r = st.columns([1, 1, 1])
+    #     with l:
+    #         st.header("🎯Games")
+    #         st.subheader(
+    #             f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L")
+    #     with m:
+    #         st.header("🏆Winrates")
+    #         st.subheader(f"{round((stats['wins']/10), 2)*100} %")
+    #     with r:
+    #         st.header("⚔️KDA")
+    #         st.subheader(
+    #             f"{stats['kills']}/{stats['deaths']}/{stats['assists']}")
+
+    #     l, m, r = st.columns([1, 1, 1])
+    #     with l:
+    #         st.header("🥊Damage")
+    #         st.subheader(stats['dmg'])
+    #     with m:
+    #         st.header("Pentakills")
+    #         st.subheader(stats['penta'])
+    #     with r:
+    #         st.header("💡Vision")
+    #         st.subheader(stats['vision'])
