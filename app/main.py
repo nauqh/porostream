@@ -74,9 +74,17 @@ with tab1:
         st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
-    data = df.groupby('summonerName')['visionScore'].mean().to_dict()
-    fig = graph_vision(data)
-    st.plotly_chart(fig, use_container_width=True)
+    l, r = st.columns([2, 1])
+    with l:
+        data = df.groupby('summonerName')['visionScore'].mean().to_dict()
+        fig = graph_vision(data)
+        st.plotly_chart(fig, use_container_width=True)
+    with r:
+        st.write("##")
+        st.subheader("What's a good vision score?")
+        st.write(
+            "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
+        st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
 
 with st.sidebar:
     st.header("🔍Search summoner")
