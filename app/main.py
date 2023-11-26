@@ -44,7 +44,7 @@ st.markdown("""<h3 style='
 st.image("img/poros.jpg")
 
 # NOTE: LEADERBOARD
-df = pd.read_csv("D:\Laboratory\Porostream\matches.csv")
+df = pd.read_csv("./matches.csv")
 
 st.header("⭐Leaderboard")
 tab1, tab2 = st.tabs(
