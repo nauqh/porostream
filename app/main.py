@@ -80,7 +80,6 @@ with tab2:
         fig = graph_vision(data)
         st.plotly_chart(fig, use_container_width=True)
     with r:
-        st.write("##")
         st.subheader("What's a good vision score?")
         st.write(
             "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
