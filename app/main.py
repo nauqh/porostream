@@ -190,7 +190,7 @@ if run:
                 st.subheader(stats['dragonKills'])
             with r:
                 st.subheader("💡Vision")
-                st.subheader(stats['vision'])
+                st.subheader(f"Avg {stats['vision']} per game")
         with tab2:
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)

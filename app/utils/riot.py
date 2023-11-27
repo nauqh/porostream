@@ -101,7 +101,7 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
 
     stats['cspermin'] = round(stats['cs']/stats['duration'], 2)
     stats['vision'] = player_df['visionScore'].mean()
-    stats['dragonKills'] = player_df['dragonKills'].max()
+    stats['dragonKills'] = round(player_df['dragonKills'].mean(), 1)
 
     if stats['timealive'] > stats['timedead']:
         stats['badge'] = "🏹 Immortal Shieldbow"
