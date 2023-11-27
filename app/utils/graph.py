@@ -137,6 +137,10 @@ def convert_timestamp_to_date(timestamp):
 
 
 def graph_personal(matchdf, playerdf):
+    # Reverse the order of rows
+    matchdf = matchdf.iloc[::-1].reset_index(drop=True)
+    playerdf = playerdf.iloc[::-1].reset_index(drop=True)
+
     matchdf['CSperMin'] = (playerdf['totalMinionsKilled'] + playerdf['neutralMinionsKilled']) / \
         (matchdf['gameDuration'] / 60)
     matchdf['VisionperMin'] = playerdf['visionScore'] / \
