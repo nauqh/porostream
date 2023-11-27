@@ -186,11 +186,11 @@ if run:
                 st.subheader("🥊Damage")
                 st.subheader(stats['dmg'])
             with m:
-                st.subheader("🐲Dragon kills")
-                st.subheader(stats['dragonKills'])
+                st.subheader("🥷Objective Steal")
+                st.subheader(f"Avg {stats['objsStolen']} per game")
             with r:
                 st.subheader("💡Vision")
-                st.subheader(f"Avg {stats['vision']} per game")
+                st.subheader(stats['vision'])
         with tab2:
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
