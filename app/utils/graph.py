@@ -18,7 +18,7 @@ def graph_dmg(data: dict):
                                 hoverinfo='none', name=''))
 
     # Update the layout for better visualization
-    fig.update_layout(title='Average Damage on Champions',
+    fig.update_layout(title='Avg Damage on Champions',
                       autosize=True,
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
                       height=500)
@@ -44,7 +44,7 @@ def graph_vision(data: dict):
                                 hovertemplate='Vision score: %{y}', name=''))
 
     # Update the layout for better visualization
-    fig.update_layout(title='Average Vision Score',
+    fig.update_layout(title='Avg Vision Score',
                       autosize=True,
                       yaxis=dict(title='Vision score'),
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
