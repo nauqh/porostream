@@ -186,8 +186,8 @@ if run:
                 st.subheader("🥊Damage")
                 st.subheader(stats['dmg'])
             with m:
-                st.subheader("👑Pentakills")
-                st.subheader(stats['penta'])
+                st.subheader("🐲Dragon kills")
+                st.subheader(stats['dragonKills'])
             with r:
                 st.subheader("💡Vision")
                 st.subheader(stats['vision'])
