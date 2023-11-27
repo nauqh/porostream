@@ -97,7 +97,7 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
         'timealive': player_df['longestTimeSpentLiving'].mean() // 60,
         'timedead': player_df['totalTimeSpentDead'].mean(),
         'totalheal': player_df['totalHealsOnTeammates'].max(),
-        'cs': player_df['totalMinionsKilled'].max(),
+        'cs': player_df['totalMinionsKilled'].mean() + player_df['neutralMinionsKilled'].mean(),
     })
 
     stats['cspermin'] = round(stats['cs']/stats['duration'], 2)
