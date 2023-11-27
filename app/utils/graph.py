@@ -183,7 +183,7 @@ def graph_personal(matchdf, playerdf):
 
     fig.add_trace(line_trace, secondary_y=True)
 
-    fig.update_layout(title='Metrics over Time (Summoner: Wavepin)', height=500,
+    fig.update_layout(title=f"Metrics over Time (Summoner: {playerdf['summonerName'][0]})", height=500,
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
     fig.update_yaxes(title=None, secondary_y=False, range=[0, 10])
