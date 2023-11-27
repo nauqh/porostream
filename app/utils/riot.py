@@ -3,6 +3,7 @@ import requests
 import pandas as pd
 from stqdm import stqdm
 import streamlit as st
+from math import ceil
 
 
 def get_puuid(api_key, summoner, tagline):
@@ -101,7 +102,7 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
 
     stats['cspermin'] = round(stats['cs']/stats['duration'], 2)
     stats['vision'] = player_df['visionScore'].mean()
-    stats['objsStolen'] = int(player_df['objectivesStolen'].mean())
+    stats['objsStolen'] = ceil(player_df['objectivesStolen'].mean())
 
     if stats['timealive'] > stats['timedead']:
         stats['badge'] = "🏹 Immortal Shieldbow"
