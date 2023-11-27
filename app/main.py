@@ -186,11 +186,22 @@ if run:
                 st.subheader("🥊Damage")
                 st.subheader(stats['dmg'])
             with m:
-                st.subheader("🥷Objective Steal")
-                st.subheader(f"Max {stats['objsStolen']}")
+                st.subheader("👑Pentakills")
+                st.subheader(stats['penta'])
             with r:
                 st.subheader("💡Vision")
                 st.subheader(stats['vision'])
+
+            l, m, r = st.columns([1, 1, 1])
+            with l:
+                st.subheader("⛏️CSperMin")
+                st.subheader(stats['cspermin'])
+            with m:
+                st.subheader("🥷Objectives")
+                st.subheader(f"Max {stats['objsStolen']} stolen")
+            with r:
+                st.subheader("☁️Time alive")
+                st.subheader(f"Longest {stats['timealive']}")
         with tab2:
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
