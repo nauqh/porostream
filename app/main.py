@@ -187,7 +187,7 @@ if run:
                 st.subheader(stats['dmg'])
             with m:
                 st.subheader("🥷Objective Steal")
-                st.subheader(f"Avg {stats['objsStolen']} per game")
+                st.subheader(f"{stats['objsStolen']} per game")
             with r:
                 st.subheader("💡Vision")
                 st.subheader(stats['vision'])
