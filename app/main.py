@@ -25,6 +25,26 @@ with st.sidebar:
     st.markdown(
         "Porostream lets you analyze your League of Legends history to give you a deeper understanding of your performance.")
 
+# NOTE: SEARCH INPUT
+with st.sidebar:
+    st.header("🔍Search summoner")
+    url = st.text_input(
+        "Enter summoner name and tag", "Obiwan, #HYM")
+    option = st.selectbox(
+        'Choose your region',
+        ('Asia', 'Europe', 'North America', 'Oceania'))
+    mode = st.multiselect(
+        'Choose game mode',
+        ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
+        ['Ranked Flex'])
+
+    st.header("🔒B.R.O")
+    summoner = st.selectbox(
+        'Choose summoner',
+        ('Thánh Chặt Xác', 'Cozy Bearrrrr', 'indestructibleVN', 'Obiwan', 'Wavepin', 'Tupac Shaco'), index=None)
+
+    run = st.button("Find out")
+
 # TODO: Main
 st.markdown("""<h1 style='
                 font-family: Recoleta-Regular; font-weight: 400; color: #ffc300;
@@ -84,26 +104,6 @@ with tab2:
         st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
         fig = graph_winrate(df)
         st.plotly_chart(fig, use_container_width=True)
-
-# NOTE: SEARCH INPUT
-with st.sidebar:
-    st.header("🔍Search summoner")
-    url = st.text_input(
-        "Enter summoner name and tag", "Obiwan, #HYM")
-    option = st.selectbox(
-        'Choose your region',
-        ('Asia', 'Europe', 'North America', 'Oceania'))
-    mode = st.multiselect(
-        'Choose game mode',
-        ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
-        ['Ranked Flex'])
-
-    st.header("🔒B.R.O")
-    summoner = st.selectbox(
-        'Choose summoner',
-        ('Thánh Chặt Xác', 'Cozy Bearrrrr', 'indestructibleVN', 'Obiwan', 'Wavepin', 'Tupac Shaco'), index=None)
-
-    run = st.button("Find out")
 
 
 if run:
@@ -165,33 +165,32 @@ if run:
 
         # NOTE: STATS
         st.write("##")
-        st.header("Summary")
-        l, m, r = st.columns([1, 1, 1])
-        with l:
-            st.subheader("🎯Games")
-            st.subheader(
-                f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L")
-        with m:
-            st.subheader("🏆Winrates")
-            st.subheader(f"{round((stats['wins']/10), 2)*100} %")
-        with r:
-            st.subheader("⚔️KDA")
-            st.subheader(
-                f"{stats['kills']}/{stats['deaths']}/{stats['assists']}")
+        tab1, tab2 = st.tabs(
+            ["Summary", "Metrics over Time"])
+        with tab1:
+            l, m, r = st.columns([1, 1, 1])
+            with l:
+                st.subheader("🎯Games")
+                st.subheader(
+                    f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L")
+            with m:
+                st.subheader("🏆Winrates")
+                st.subheader(f"{round((stats['wins']/10), 2)*100} %")
+            with r:
+                st.subheader("⚔️KDA")
+                st.subheader(
+                    f"{stats['kills']}/{stats['deaths']}/{stats['assists']}")
 
-        l, m, r = st.columns([1, 1, 1])
-        with l:
-            st.subheader("🥊Damage")
-            st.subheader(stats['dmg'])
-        with m:
-            st.subheader("👑Pentakills")
-            st.subheader(stats['penta'])
-        with r:
-            st.subheader("💡Vision")
-            st.subheader(stats['vision'])
-
-        # GRAPH
-        st.write("##")
-        st.header("Metrics over time")
-        fig = graph_personal(match_df, player_df)
-        st.plotly_chart(fig, use_container_width=True)
+            l, m, r = st.columns([1, 1, 1])
+            with l:
+                st.subheader("🥊Damage")
+                st.subheader(stats['dmg'])
+            with m:
+                st.subheader("👑Pentakills")
+                st.subheader(stats['penta'])
+            with r:
+                st.subheader("💡Vision")
+                st.subheader(stats['vision'])
+        with tab2:
+            fig = graph_personal(match_df, player_df)
+            st.plotly_chart(fig, use_container_width=True)

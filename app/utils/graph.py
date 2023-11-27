@@ -148,6 +148,13 @@ def graph_personal(matchdf, playerdf):
     matchdf['gameCreation'] = matchdf['gameCreation'].apply(
         convert_timestamp_to_date)
 
+    # Calculate the difference between CSperMin and GoldperMin
+    matchdf['CS_Gold_Difference'] = abs(
+        matchdf['CSperMin'] - matchdf['GoldperMin'])
+
+    # Find the index where the difference is the highest
+    max_difference_index = matchdf['CS_Gold_Difference'].idxmax()
+
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
     metrics = ['VisionperMin', 'CSperMin', 'GoldperMin']
@@ -167,13 +174,19 @@ def graph_personal(matchdf, playerdf):
         else:
             fig.add_trace(trace)
 
-    fig.update_layout(title='',
-                      yaxis_title='VisionperMin and CSperMin',
-                      yaxis2_title='GoldperMin',
-                      xaxis_title='Game Creation Time',
+    line_trace = go.Scatter(x=[matchdf['gameCreation'][max_difference_index], matchdf['gameCreation'][max_difference_index]],
+                            y=[matchdf['CSperMin'][max_difference_index],
+                               matchdf['GoldperMin'][max_difference_index]],
+                            mode='lines',
+                            line=dict(color="#ffc300", width=2, dash="dash"),
+                            name='CS/Gold Max Difference')
+
+    fig.add_trace(line_trace, secondary_y=True)
+
+    fig.update_layout(title='Metrics over Time (Summoner: Wavepin)', height=500,
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
-    fig.update_yaxes(title=None, secondary_y=False)
+    fig.update_yaxes(title=None, secondary_y=False, range=[0, 10])
     fig.update_yaxes(title=None, secondary_y=True)
 
     fig.update_xaxes(title=None)
