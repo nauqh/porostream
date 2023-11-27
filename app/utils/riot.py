@@ -93,12 +93,14 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
 
     # Achievements (time in sec)
     stats.update({
-        'duration': match_df['gameDuration'].mean() // 60,
         'timealive': player_df['longestTimeSpentLiving'].mean() // 60,
         'timedead': player_df['totalTimeSpentDead'].mean(),
         'totalheal': player_df['totalHealsOnTeammates'].max(),
         'cs': player_df['totalMinionsKilled'].mean() + player_df['neutralMinionsKilled'].mean(),
     })
+
+    stats['cspermin'] = (player_df['totalMinionsKilled'] + player_df['neutralMinionsKilled']) / \
+        (match_df['gameDuration'] / 60)
 
     stats['cspermin'] = round(stats['cs']/stats['duration'], 2)
     stats['vision'] = player_df['visionScore'].mean()
