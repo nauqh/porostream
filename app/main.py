@@ -31,8 +31,6 @@ with st.sidebar:
     st.write("## 📝About the project")
     st.markdown(
         "Porostream lets you analyze your League of Legends history to give you a deeper understanding of your performance.")
-    st.markdown(
-        "Status: Beta")
 
 # TODO: Main
 st.markdown("""<h1 style='
