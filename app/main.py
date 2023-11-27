@@ -171,7 +171,7 @@ if run or st.session_state['run']:
             st.write(f"`Tagline`: {name['tagLine']}")
 
         # NOTE: STATS
-        st.header("Summoner stats")
+        st.header("📍Summary")
         l, m, r = st.columns([1, 1, 1])
         with l:
             st.header("🎯Games")
@@ -197,5 +197,6 @@ if run or st.session_state['run']:
             st.subheader(stats['vision'])
 
         # GRAPH
+        st.header("🎯Ingame")
         fig = graph_personal(match_df, player_df)
         st.plotly_chart(fig, use_container_width=True)
