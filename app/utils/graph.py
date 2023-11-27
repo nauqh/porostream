@@ -137,7 +137,7 @@ def convert_timestamp_to_date(timestamp):
 
 
 def graph_personal(matchdf, playerdf):
-    matchdf['CSperMin'] = playerdf['totalMinionsKilled'] / \
+    matchdf['CSperMin'] = (playerdf['totalMinionsKilled'] + playerdf['neutralMinionsKilled']) / \
         (matchdf['gameDuration'] / 60)
     matchdf['VisionperMin'] = playerdf['visionScore'] / \
         (matchdf['gameDuration'] / 60)
