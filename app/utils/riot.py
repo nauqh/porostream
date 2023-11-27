@@ -94,7 +94,7 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
     # Achievements (time in sec)
     stats.update({
         'duration': match_df['gameDuration'].mean() // 60,
-        'timealive': player_df['longestTimeSpentLiving'].mean(),
+        'timealive': player_df['longestTimeSpentLiving'].mean() // 60,
         'timedead': player_df['totalTimeSpentDead'].mean(),
         'totalheal': player_df['totalHealsOnTeammates'].max(),
         'cs': player_df['totalMinionsKilled'].max(),
@@ -103,16 +103,6 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
     stats['cspermin'] = round(stats['cs']/stats['duration'], 2)
     stats['vision'] = player_df['visionScore'].mean()
     stats['objsStolen'] = player_df['objectivesStolen'].max()
-
-    if stats['timealive'] > stats['timedead']:
-        stats['badge'] = "🏹 Immortal Shieldbow"
-    elif stats['totalheal'] > 1000:
-        stats['badge'] = "🛡️ Guardian Angel"
-    elif stats['cspermin'] > 100:
-        stats['badge'] = "🪵 The Collector"
-    else:
-        stats['badge'] = "💀 Death's Dance"
-    return stats
 
 
 if __name__ == '__main__':

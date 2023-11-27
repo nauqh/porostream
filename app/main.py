@@ -201,7 +201,7 @@ if run:
                 st.subheader(f"Max {stats['objsStolen']} stolen")
             with r:
                 st.subheader("☁️Time alive")
-                st.subheader(f"Longest {stats['timealive']}")
+                st.subheader(f"Longest {stats['timealive']} min")
         with tab2:
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
