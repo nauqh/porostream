@@ -97,20 +97,22 @@ def graph_dmgproportion(names, trues, physicals, magics):
 
 def graph_winrate(df):
     data = df['teamId'].value_counts().to_dict()
+    total_matches = len(df)
+
     fig = go.Figure()
 
-    for color, value in data.items():
-        # Encode color based on values
-        bar_color = 'Red' if color == 100 else 'Blue'
+    for team_id, count in data.items():
+        win_rate = (count / total_matches) * 100
+
+        # Encode color based on teamId
+        bar_color = 'Red' if team_id == 100 else 'Blue'
 
         fig.add_trace(go.Bar(
             name='',
             y=[f'{bar_color} side'],
-            x=[value],
-            text=value, textposition='outside',
-            texttemplate='%{text:.2s}%',
+            x=[win_rate],
             orientation='h',
-            hovertemplate='%{x}%'
+            hovertemplate='Win Rate: %{x}%'
         ))
 
     # Adding labels and title
@@ -118,6 +120,7 @@ def graph_winrate(df):
         title='Blue / Red Winrate',
         showlegend=False,
         hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
+        xaxis=dict(title='Win Rate (%)'),
         height=300
     )
 

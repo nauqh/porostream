@@ -94,7 +94,7 @@ with tab2:
         fig = graph_winrate(df)
         st.plotly_chart(fig, use_container_width=True)
 
-
+# NOTE: SEARCH INPUT
 with st.sidebar:
     st.header("🔍Search summoner")
     url = st.text_input(
