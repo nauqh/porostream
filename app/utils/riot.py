@@ -101,8 +101,6 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
 
     stats['cspermin'] = (player_df['totalMinionsKilled'] + player_df['neutralMinionsKilled']) / \
         (match_df['gameDuration'] / 60)
-
-    stats['cspermin'] = round(stats['cs']/stats['duration'], 2)
     stats['vision'] = player_df['visionScore'].mean()
     stats['objsStolen'] = player_df['objectivesStolen'].max()
 
