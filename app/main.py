@@ -166,7 +166,7 @@ if run:
         # NOTE: STATS
         st.write("##")
         tab1, tab2 = st.tabs(
-            ["Summary", "Metrics over time"])
+            ["Summary", "Metrics over Time"])
         with tab1:
             l, m, r = st.columns([1, 1, 1])
             with l:
