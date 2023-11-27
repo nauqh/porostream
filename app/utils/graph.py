@@ -167,7 +167,7 @@ def graph_personal(matchdf, playerdf):
         else:
             fig.add_trace(trace)
 
-    fig.update_layout(title=None,
+    fig.update_layout(title='',
                       yaxis_title='VisionperMin and CSperMin',
                       yaxis2_title='GoldperMin',
                       xaxis_title='Game Creation Time',
