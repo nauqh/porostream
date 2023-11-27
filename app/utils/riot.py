@@ -104,6 +104,8 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
     stats['vision'] = player_df['visionScore'].mean()
     stats['objsStolen'] = player_df['objectivesStolen'].max()
 
+    return stats
+
 
 if __name__ == '__main__':
     KEY = 'RGAPI-a384a673-d288-42ec-a860-55a1602dba94'
