@@ -195,7 +195,7 @@ if run:
             l, m, r = st.columns([1, 1, 1])
             with l:
                 st.subheader("⛏️CSperMin")
-                st.subheader(round(stats['cspermin'], 1))
+                st.subheader(stats['cspermin'])
             with m:
                 st.subheader("🥷Objectives")
                 st.subheader(f"Max {stats['objsStolen']} stolen")
