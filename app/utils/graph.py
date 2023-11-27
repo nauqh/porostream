@@ -88,6 +88,37 @@ def graph_dmgproportion(names, trues, physicals, magics):
         hovertemplate='%{x}'
     ))
 
-    fig.update_layout(title='Damage Proportion', barmode='stack', height=500,
-                      hoverlabel=dict(bgcolor='#000', font_color='#fff'))
+    fig.update_layout(title='Damage Proportion', barmode='stack',
+                      height=500,
+                      hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
+                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5))
+    return fig
+
+
+def graph_winrate(df):
+    data = df['teamId'].value_counts().to_dict()
+    fig = go.Figure()
+
+    for color, value in data.items():
+        # Encode color based on values
+        bar_color = 'Red' if color == 100 else 'Blue'
+
+        fig.add_trace(go.Bar(
+            name='',
+            y=[f'{bar_color} side'],
+            x=[value],
+            text=value, textposition='outside',
+            texttemplate='%{text:.2s}%',
+            orientation='h',
+            hovertemplate='%{x}%'
+        ))
+
+    # Adding labels and title
+    fig.update_layout(
+        title='Blue / Red Winrate',
+        showlegend=False,
+        hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
+        height=300
+    )
+
     return fig

@@ -80,9 +80,8 @@ with tab1:
         magics = list(mag.values())
         fig = graph_dmgproportion(names, trues, physicals, magics)
         st.plotly_chart(fig, use_container_width=True)
-
 with tab2:
-    l, r = st.columns([2, 1])
+    l, r = st.columns([1, 1])
     with l:
         data = df.groupby('summonerName')['visionScore'].mean().to_dict()
         fig = graph_vision(data)
@@ -92,6 +91,9 @@ with tab2:
         st.write(
             "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
         st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
+        fig = graph_winrate(df)
+        st.plotly_chart(fig, use_container_width=True)
+
 
 with st.sidebar:
     st.header("🔍Search summoner")
@@ -142,7 +144,7 @@ if run or st.session_state['run']:
             # Every form must have a submit button.
             submitted = st.form_submit_button("Submit")
             if submitted:
-                st.success("✅Submitted application")
+                st.success("✅ Submitted application")
 
     else:
         st.subheader("⌛Extracting data from RIOT API")
