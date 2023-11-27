@@ -174,26 +174,26 @@ if run or st.session_state['run']:
         st.header("Summary")
         l, m, r = st.columns([1, 1, 1])
         with l:
-            st.header("🎯Games")
+            st.subheader("🎯Games")
             st.subheader(
                 f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L")
         with m:
-            st.header("🏆Winrates")
+            st.subheader("🏆Winrates")
             st.subheader(f"{round((stats['wins']/10), 2)*100} %")
         with r:
-            st.header("⚔️KDA")
+            st.subheader("⚔️KDA")
             st.subheader(
                 f"{stats['kills']}/{stats['deaths']}/{stats['assists']}")
 
         l, m, r = st.columns([1, 1, 1])
         with l:
-            st.header("🥊Damage")
+            st.subheader("🥊Damage")
             st.subheader(stats['dmg'])
         with m:
-            st.header("Pentakills")
+            st.subheader("Pentakills")
             st.subheader(stats['penta'])
         with r:
-            st.header("💡Vision")
+            st.subheader("💡Vision")
             st.subheader(stats['vision'])
 
         # GRAPH
