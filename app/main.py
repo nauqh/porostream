@@ -145,7 +145,7 @@ if run or st.session_state['run']:
                 st.success("✅ Submitted application")
 
     else:
-        st.write("⌛Extracting data from RIOT API")
+        st.subheader("⌛Extracting data from RIOT API")
 
         summoner, name = get_info(TOKEN, puuid)
         ids = get_match_ids(TOKEN, puuid, 10, queue_id=440)
