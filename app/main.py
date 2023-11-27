@@ -63,7 +63,7 @@ st.markdown("""<h3 style='
 st.image("img/poros.jpg")
 
 # NOTE: LEADERBOARD
-df = pd.read_csv("matches.csv")
+df = pd.read_csv("extract.csv")
 
 st.header("⭐Leaderboard")
 tab1, tab2 = st.tabs(
