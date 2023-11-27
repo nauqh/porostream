@@ -67,7 +67,7 @@ df = pd.read_csv("matches.csv")
 
 st.header("⭐Leaderboard")
 tab1, tab2 = st.tabs(
-    ["Damage on Champions", "Vision Score"])
+    ["⚔️Damage on Champions", "🔦Vision Score"])
 
 with tab1:
     l, r = st.columns([1, 1.5])
