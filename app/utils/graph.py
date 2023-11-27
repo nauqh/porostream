@@ -1,4 +1,6 @@
 import plotly.graph_objects as go
+from datetime import datetime
+from plotly.subplots import make_subplots
 
 
 def graph_dmg(data: dict):
@@ -91,7 +93,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
     fig.update_layout(title='Damage Proportion', barmode='stack',
                       height=500,
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
-                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5))
+                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
     return fig
 
 
@@ -115,7 +117,6 @@ def graph_winrate(df):
             hovertemplate='Win Rate: %{x}%'
         ))
 
-    # Adding labels and title
     fig.update_layout(
         title='Blue / Red Winrate',
         showlegend=False,
@@ -123,5 +124,58 @@ def graph_winrate(df):
         xaxis=dict(title='Win Rate (%)'),
         height=300
     )
+
+    return fig
+
+# =======================================
+
+
+def convert_timestamp_to_date(timestamp):
+    date_object = datetime.utcfromtimestamp(timestamp)
+    formatted_date = date_object.strftime('%b %d %H:%M')
+    return formatted_date
+
+
+def graph_personal(matchdf, playerdf):
+    matchdf['CSperMin'] = playerdf['totalMinionsKilled'] / \
+        (matchdf['gameDuration'] / 60)
+    matchdf['VisionperMin'] = playerdf['visionScore'] / \
+        (matchdf['gameDuration'] / 60)
+    matchdf['GoldperMin'] = playerdf['goldEarned'] / \
+        (matchdf['gameDuration'] / 60)
+
+    matchdf['gameCreation'] = matchdf['gameCreation'] / 1000
+    matchdf['gameCreation'] = matchdf['gameCreation'].apply(
+        convert_timestamp_to_date)
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    metrics = ['VisionperMin', 'CSperMin', 'GoldperMin']
+
+    for metric in metrics:
+        trace = go.Scatter(
+            x=matchdf['gameCreation'],
+            y=round(matchdf[metric], 2),
+            mode='lines+markers',
+            name=metric,
+            hovertemplate='%{y}'
+        )
+
+        # Assign the trace to the appropriate y-axis based on the metric
+        if metric == 'GoldperMin':
+            fig.add_trace(trace, secondary_y=True)
+        else:
+            fig.add_trace(trace)
+
+    fig.update_layout(title='Metrics over Time',
+                      yaxis_title='VisionperMin and CSperMin',
+                      yaxis2_title='GoldperMin',
+                      xaxis_title='Game Creation Time',
+                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
+
+    fig.update_yaxes(title=None, secondary_y=False)
+    fig.update_yaxes(title=None, secondary_y=True)
+
+    fig.update_xaxes(title=None)
 
     return fig

@@ -197,3 +197,7 @@ if run or st.session_state['run']:
         with r:
             st.header("💡Vision")
             st.subheader(stats['vision'])
+
+        # GRAPH
+        fig = graph_personal(match_df, player_df)
+        st.plotly_chart(fig, use_container_width=True)
