@@ -45,7 +45,7 @@ st.markdown("""<h3 style='
                 font-size: 1.55rem'>Our sophisticated A.I. judges your awful gameplay</h3>""",
             unsafe_allow_html=True)
 """
-![Python](https://img.shields.io/badge/make%20with-python%203.10-3670A0?style=for-the-badge&logo=python&logoColor=fafafa)
+![Python](https://img.shields.io/badge/python%203.10-3670A0?style=for-the-badge&logo=python&logoColor=fafafa)
 ![Plotly](https://img.shields.io/badge/plotly%20-%2300416A.svg?&style=for-the-badge&logo=pandas&logoColor=white)
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 """
