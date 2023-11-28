@@ -165,8 +165,8 @@ if run:
 
         # NOTE: STATS
         st.write("##")
-        tab1, tab2, tab3 = st.tabs(
-            ["Summary", "Metrics over Time", "Damage"])
+        tab1, tab2 = st.tabs(
+            ["Summary", "Metrics over Time"])
         with tab1:
             l, m, r = st.columns([1, 1, 1])
             with l:
@@ -205,6 +205,6 @@ if run:
         with tab2:
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
-        with tab3:
+
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
