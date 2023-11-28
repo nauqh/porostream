@@ -187,11 +187,64 @@ def graph_personal(matchdf, playerdf):
 
     fig.add_trace(line_trace, secondary_y=True)
 
-    fig.update_layout(title=f"Metrics over Time (Summoner: {playerdf['summonerName'][0]})", height=500,
+    fig.update_layout(title=f"Metrics over Time (Summoner: {playerdf['summonerName'][0]})",
+                      height=500,
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
-    fig.update_yaxes(title=None, secondary_y=False, range=[0, 10])
-    fig.update_yaxes(title=None, secondary_y=True)
+    fig.update_yaxes(title=None, showgrid=False)
+    fig.update_yaxes(secondary_y=False,
+                     range=[0, 10])
+    fig.update_xaxes(title=None)
+
+    return fig
+
+
+def graph_dmgpersonal(matchdf, playerdf):
+    matchdf = matchdf.iloc[::-1].reset_index(drop=True)
+    playerdf = playerdf.iloc[::-1].reset_index(drop=True)
+    matchdf['DmgperMin'] = playerdf['totalDamageDealtToChampions'] / \
+        (matchdf['gameDuration'] / 60)
+    matchdf['CSperMin'] = (playerdf['totalMinionsKilled'] + playerdf['neutralMinionsKilled']) / \
+        (matchdf['gameDuration'] / 60)
+    matchdf['GoldperMin'] = playerdf['goldEarned'] / \
+        (matchdf['gameDuration'] / 60)
+
+    matchdf['gameCreation'] = matchdf['gameCreation'] / 1000
+    matchdf['gameCreation'] = matchdf['gameCreation'].apply(
+        convert_timestamp_to_date)
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    fig.add_trace(go.Scatter(
+        x=matchdf['gameCreation'],
+        y=round(matchdf['CSperMin'], 2),
+        mode='lines+markers',
+        name="CSperMin",
+        hovertemplate='CS: %{y}',
+    ), secondary_y=True)
+
+    fig.add_trace(go.Scatter(
+        x=matchdf['gameCreation'],
+        y=round(matchdf['DmgperMin'], 2),
+        mode='lines+markers',
+        name="DamageperMin",
+        hovertemplate='Damage: %{y}'
+    ))
+
+    fig.add_trace(go.Bar(
+        x=matchdf['gameCreation'],
+        y=round(matchdf['GoldperMin'], 2),
+        name='GoldperMin',
+        hovertemplate="Gold: %{y}",
+        text=matchdf['GoldperMin'], textposition='outside', texttemplate='%{text:.2s}',
+        marker=dict(color="#ffc300")
+    ))
+
+    fig.update_layout(title=f"Gold by Damage and CS (Summoner: {playerdf['summonerName'][0]})", height=600,
+                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
+
+    fig.update_yaxes(title=None, showgrid=False)
+    fig.update_yaxes(secondary_y=True, range=[0, 10])
 
     fig.update_xaxes(title=None)
 
