@@ -240,12 +240,10 @@ def graph_dmgpersonal(matchdf, playerdf):
         marker=dict(color="#ffc300")
     ))
 
-    fig.update_layout(title={
-        'text': "Gold by Damage and CS",
-        "font_size": 15
-    },
-        height=600,
-        legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
+    fig.update_layout(title="Gold by Damage and CS",
+                      title_font_size=20,
+                      height=600,
+                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
     fig.update_yaxes(title=None, showgrid=False)
     fig.update_yaxes(secondary_y=True, range=[0, 10])
