@@ -187,7 +187,7 @@ def graph_personal(matchdf, playerdf):
 
     fig.add_trace(line_trace, secondary_y=True)
 
-    fig.update_layout(title=f"Metrics over Time (Summoner: {playerdf['summonerName'][0]})",
+    fig.update_layout(title="Laning statistics",
                       height=500,
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
@@ -240,7 +240,7 @@ def graph_dmgpersonal(matchdf, playerdf):
         marker=dict(color="#ffc300")
     ))
 
-    fig.update_layout(title=f"Gold by Damage and CS (Summoner: {playerdf['summonerName'][0]})", height=600,
+    fig.update_layout(title="Gold by Damage and CS", height=600,
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
     fig.update_yaxes(title=None, showgrid=False)
