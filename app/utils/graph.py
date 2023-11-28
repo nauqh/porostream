@@ -18,7 +18,7 @@ def graph_dmg(data: dict):
                                 hoverinfo='none', name=''))
 
     # Update the layout for better visualization
-    fig.update_layout(title='Avg Damage on Champions',
+    fig.update_layout(title='Avg Damage on Champions', title_font_size=25,
                       autosize=True,
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
                       height=500)
@@ -44,7 +44,7 @@ def graph_vision(data: dict):
                                 hovertemplate='Vision score: %{y}', name=''))
 
     # Update the layout for better visualization
-    fig.update_layout(title='Avg Vision Score',
+    fig.update_layout(title='Avg Vision Score', title_font_size=25,
                       autosize=True,
                       yaxis=dict(title='Vision score'),
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
@@ -90,7 +90,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         hovertemplate='%{x}'
     ))
 
-    fig.update_layout(title='Damage Proportion', barmode='stack',
+    fig.update_layout(title='Damage Proportion', barmode='stack', title_font_size=25,
                       height=500,
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
@@ -118,7 +118,7 @@ def graph_winrate(df):
         ))
 
     fig.update_layout(
-        title='Blue / Red Winrate',
+        title='Blue / Red Winrate', title_font_size=25,
         showlegend=False,
         hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
         xaxis=dict(title='Win Rate (%)'),
@@ -187,7 +187,7 @@ def graph_personal(matchdf, playerdf):
 
     fig.add_trace(line_trace, secondary_y=True)
 
-    fig.update_layout(title="Laning statistics",
+    fig.update_layout(title="Laning statistics", title_font_size=25,
                       height=500,
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
@@ -241,7 +241,7 @@ def graph_dmgpersonal(matchdf, playerdf):
     ))
 
     fig.update_layout(title="Gold by Damage and CS",
-                      title_font_size=20,
+                      title_font_size=25,
                       height=600,
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
 
