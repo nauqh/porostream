@@ -190,7 +190,7 @@ if run:
         st.error("💀Summoner not found")
     else:
         match_df, player_df = gather_data(TOKEN, puuid, ids)
-        match_df = match_df[match_df['gameEndedInEarlySurrender'] != True]
+        player_df = player_df[player_df['gameEndedInEarlySurrender'] != True]
         stats = transform(match_df, player_df)
 
         # NOTE: PROFILE
