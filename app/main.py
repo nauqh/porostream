@@ -125,7 +125,7 @@ with m:
     queue = {'RANKED_SOLO_5x5': 'Soloqueue',
              'RANKED_FLEX_SR': 'Ranked Flex'}
     st.write(
-        f"""<span style='font-weight: 200; font-size: 1rem'>{queue[data['queue']] - {data['tier']} {data['rank']}}</span>""", unsafe_allow_html=True)
+        f"""<span style='font-weight: 200; font-size: 1rem'>{queue[data['queue']]} - {data['tier']} {data['rank']}</span>""", unsafe_allow_html=True)
     st.write(
         f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem'>{data['name']}</span>""", unsafe_allow_html=True)
 
