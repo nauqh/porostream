@@ -53,6 +53,7 @@ st.markdown("""<h3 style='
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 """
 st.image("img/poros.jpg")
+st.subheader("🔒Team info is locked")
 password = st.text_input("Enter password to unlock team info", type="password")
 
 if password == "HYM":
@@ -136,8 +137,6 @@ if password == "HYM":
             st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
             fig = graph_winrate(df)
             st.plotly_chart(fig, use_container_width=True)
-else:
-    st.subheader("🔒Team info is locked")
 
 if run:
     if region is None:
@@ -201,7 +200,7 @@ if run:
             st.image(
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
             st.link_button("Summoner Profile",
-                           f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{name}")
+                           f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{name}-{tag}")
         with m:
             queue = {
                 'RANKED_SOLO_5x5': 'Soloqueue',

@@ -188,7 +188,9 @@ def graph_personal(matchdf, playerdf):
 
     fig.update_layout(title="Laning statistics", title_font_size=25,
                       height=500,
-                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
+                      legend=dict(orientation="h", yanchor="top",
+                                  xanchor="center", x=0.5, y=1.1),
+                      hovermode='x unified')
 
     fig.update_yaxes(title=None, showgrid=False)
     fig.update_yaxes(secondary_y=False,
@@ -219,7 +221,7 @@ def graph_dmgpersonal(matchdf, playerdf):
         y=round(matchdf['CSperMin'], 2),
         mode='lines+markers',
         name="CSperMin",
-        hovertemplate='CS: %{y}',
+        hovertemplate='%{y}',
     ), secondary_y=True)
 
     fig.add_trace(go.Scatter(
@@ -227,14 +229,14 @@ def graph_dmgpersonal(matchdf, playerdf):
         y=round(matchdf['DmgperMin'], 2),
         mode='lines+markers',
         name="DamageperMin",
-        hovertemplate='Damage: %{y}'
+        hovertemplate='%{y}'
     ))
 
     fig.add_trace(go.Bar(
         x=matchdf['gameCreation'],
         y=round(matchdf['GoldperMin'], 2),
         name='GoldperMin',
-        hovertemplate="Gold: %{y}",
+        hovertemplate="%{y}",
         text=matchdf['GoldperMin'], textposition='outside', texttemplate='%{text:.2s}',
         marker=dict(color="#ffc300")
     ))
@@ -242,7 +244,9 @@ def graph_dmgpersonal(matchdf, playerdf):
     fig.update_layout(title="Gold by Damage and CS",
                       title_font_size=25,
                       height=600,
-                      legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
+                      legend=dict(orientation="h", yanchor="top",
+                                  xanchor="center", x=0.5, y=1.1),
+                      hovermode='x unified')
 
     fig.update_yaxes(title=None, showgrid=False)
     fig.update_yaxes(secondary_y=True, range=[0, 10])
