@@ -120,6 +120,7 @@ l, m, r = st.columns([1, 1, 1])
 
 with l:
     st.image(f"img/rank/{data['tier'].upper()}.png")
+    st.subheader(data['tier'])
 
 with m:
     queue = {'RANKED_SOLO_5x5': 'Soloqueue',
@@ -127,7 +128,7 @@ with m:
     st.write(
         f"""<span style='font-weight: 200; font-size: 1rem'>{queue[data['queue']]}</span>""", unsafe_allow_html=True)
     st.write(
-        f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem'>{data['tier']} {data['rank']}</span>""", unsafe_allow_html=True)
+        f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem'>{data['name']} {data['rank']}</span>""", unsafe_allow_html=True)
 
     wins, losses = data['wins'], data['losses']
     st.subheader(f":blue[{wins}]W - :red[{losses}]L")
@@ -138,7 +139,6 @@ with m:
 with r:
     st.image(
         f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png")
-    st.subheader(data['name'])
 
 if run:
     TOKEN = settings.TOKEN
