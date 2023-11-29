@@ -107,7 +107,7 @@ with tab2:
         st.plotly_chart(fig, use_container_width=True)
 
 # NOTE: TEAM RANKED
-st.header("📑Team ranked statistics")
+st.header("📑Team ranked")
 
 with open('team.json', 'r') as f:
     team = json.load(f)
@@ -119,7 +119,7 @@ data = team[selected_player]
 l, m, r = st.columns([1, 1, 1])
 
 with l:
-    st.image(f"img/{data['tier']}.png")
+    st.image(f"img/rank/{data['tier']}.png")
 
 with m:
     queue = {'RANKED_SOLO_5x5': 'Soloqueue',
