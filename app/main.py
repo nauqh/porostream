@@ -211,7 +211,7 @@ if run:
                      unsafe_allow_html=True)
             st.write(f"""<span style='
                     font-family: Recoleta-Regular; font-weight: 400;
-                    font-size: 2.5rem'>{ranks['summonerName']}</span>""",
+                    font-size: 2.5rem'>{name}</span>""",
                      unsafe_allow_html=True)
 
             wins = ranks['wins']
