@@ -62,6 +62,7 @@ st.markdown("""<h3 style='
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 """
 st.image("img/poros.jpg")
+# password = st.text_input("Login team", type="password")
 
 # NOTE: TEAM RANKED
 st.write("##")
