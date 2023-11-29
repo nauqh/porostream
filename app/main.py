@@ -264,6 +264,6 @@ if run:
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
-            st.subheader("For more graphs, follow this link")
+            st.write("📊For more graphs, follow this link")
             st.link_button("League of Graphs",
                            f"https://www.leagueofgraphs.com/summoner/vn/{ranks[0]['summonerName']}")
