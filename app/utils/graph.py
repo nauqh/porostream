@@ -15,10 +15,10 @@ def graph_dmg(data: dict):
                                 text=damages, textposition='outside', texttemplate='%{text:,.0f}',
                                 marker=dict(
                                     color=['#1e96fc' if i == max_dmg_index else '#ffc300' for i in names]),
-                                hoverinfo='none', name=''))
+                                hovertemplate='Damage: %{y}', name=''))
 
     # Update the layout for better visualization
-    fig.update_layout(title='Avg Damage on Champions', title_font_size=25,
+    fig.update_layout(title='Damage on Champions', title_font_size=20,
                       autosize=True,
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
                       height=500)
@@ -44,9 +44,8 @@ def graph_vision(data: dict):
                                 hovertemplate='Vision score: %{y}', name=''))
 
     # Update the layout for better visualization
-    fig.update_layout(title='Avg Vision Score', title_font_size=25,
+    fig.update_layout(title='Vision Score', title_font_size=20,
                       autosize=True,
-                      yaxis=dict(title='Vision score'),
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
                       height=500)
 
@@ -90,7 +89,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         hovertemplate='%{x}'
     ))
 
-    fig.update_layout(title='Damage Proportion', barmode='stack', title_font_size=25,
+    fig.update_layout(title='Damage Proportion', barmode='stack', title_font_size=20,
                       height=500,
                       hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
                       legend=dict(orientation="h", yanchor="top", xanchor="center", x=0.5, y=1.1))
@@ -118,7 +117,7 @@ def graph_winrate(df):
         ))
 
     fig.update_layout(
-        title='Blue / Red Winrate', title_font_size=25,
+        title='Blue / Red Winrate', title_font_size=20,
         showlegend=False,
         hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
         xaxis=dict(title='Win Rate (%)'),
