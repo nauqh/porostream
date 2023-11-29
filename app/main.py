@@ -205,14 +205,14 @@ if run:
             st.image(
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
             st.link_button("Summoner Profile",
-                           f"https://www.op.gg/summoners/{region}/{ranks['summonerName']}")
+                           f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{ranks['summonerName']}")
         with m:
             queue = {
                 'RANKED_SOLO_5x5': 'Soloqueue',
                 'RANKED_FLEX_SR': 'Ranked Flex'
             }
             st.write(f"""<span style='
-                    font-weight: 200; font-size: 1rem'>{ranks['tier'].capitalize()} {ranks['rank']}{queue[ranks['queueType']]}</span>""",
+                    font-weight: 200; font-size: 1rem'>{ranks['tier'].capitalize()} {ranks['rank']} {queue[ranks['queueType']]}</span>""",
                      unsafe_allow_html=True)
             st.write(f"""<span style='
                     font-family: Recoleta-Regular; font-weight: 400;
