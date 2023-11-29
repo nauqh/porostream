@@ -61,7 +61,7 @@ st.markdown("""<h3 style='
 ![Plotly](https://img.shields.io/badge/plotly%20-%2300416A.svg?&style=for-the-badge&logo=pandas&logoColor=white)
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 """
-# st.image("img/poros.jpg")
+st.image("img/sample.png")
 
 # NOTE: LEADERBOARD
 df = pd.read_csv("extract.csv")
@@ -119,8 +119,7 @@ data = team[selected_player]
 l, m, r = st.columns([1, 1, 1])
 
 with l:
-    # st.image(f"img/rank/{data['tier']}.png")
-    st.image(f"img/poros.png")
+    st.image(f"img/rank/{data['tier']}.png")
 
 with m:
     queue = {'RANKED_SOLO_5x5': 'Soloqueue',
