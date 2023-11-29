@@ -229,7 +229,7 @@ def graph_dmgpersonal(matchdf, playerdf):
         y=round(matchdf['DmgperMin'], 2),
         mode='lines+markers',
         name="DamageperMin",
-        hovertemplate='%{y} <br> Champion: %{customdata}',
+        hovertemplate='%{y}<br>Champion: %{customdata}',
         customdata=playerdf['championName']
     ))
 
