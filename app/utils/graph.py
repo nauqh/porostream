@@ -194,7 +194,7 @@ def graph_personal(matchdf, playerdf):
 
     fig.update_yaxes(title=None, showgrid=False)
     fig.update_yaxes(secondary_y=False,
-                     range=[0, 10])
+                     range=[0, 10], showgrid=False)
     fig.update_xaxes(title=None)
 
     return fig
@@ -250,7 +250,7 @@ def graph_dmgpersonal(matchdf, playerdf):
                       hovermode='x unified')
 
     fig.update_yaxes(title=None, showgrid=False)
-    fig.update_yaxes(secondary_y=True, range=[0, 10])
+    fig.update_yaxes(secondary_y=True, range=[0, 10], showgrid=False)
 
     fig.update_xaxes(title=None)
 
