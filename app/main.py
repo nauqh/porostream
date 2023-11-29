@@ -133,7 +133,7 @@ with tab2:
         st.plotly_chart(fig, use_container_width=True)
 
 # NOTE: TEAM RANKED
-st.header("📑Team ranked")
+st.header("📑Team ranked statistics")
 
 with open('team.json', 'r') as f:
     team = json.load(f)
