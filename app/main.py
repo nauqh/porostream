@@ -140,7 +140,9 @@ if run:
     else:
         st.subheader("⌛Extracting data from RIOT API")
 
-        summoner, name = get_info(TOKEN, puuid)
+        summoner = get_info(TOKEN, puuid)
+        ranks = get_rank(TOKEN, summoner)
+
         ids = get_match_ids(TOKEN, puuid, 10, queue_id=440)
         match_df, player_df = gather_data(TOKEN, puuid, ids)
 
@@ -148,20 +150,32 @@ if run:
 
         # NOTE: PROFILE
         st.write("##")
-        l, r = st.columns([1, 2])
+        l, m, r = st.columns([1, 1, 1])
         with l:
-            st.image(
-                f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png")
-        with r:
-            st.write("""<span style='
-                    font-weight: 200; font-size: 1rem'>SUMMONER PROFILE</span>""",
+            st.image(f"img/rank/{ranks[0]['tier']}.png")
+        with m:
+            queue = {
+                'RANKED_SOLO_5x5': 'Soloqueue',
+                'RANKED_FLEX_SR': 'Ranked Flex'
+            }
+            st.write(f"""<span style='
+                    font-weight: 200; font-size: 1rem'>{queue[ranks[0]['queueType']]}</span>""",
                      unsafe_allow_html=True)
             st.write(f"""<span style='
                     font-family: Recoleta-Regular; font-weight: 400;
-                    font-size: 3rem'>{name['gameName']}</span>""",
+                    font-size: 3rem'>{ranks[0]['tier'].capitalize()} {ranks[0]['rank']}</span>""",
                      unsafe_allow_html=True)
+
+            wins = ranks[0]['wins']
+            losses = ranks[0]['losses']
+            st.subheader(f":blue[{wins}]W - :red[{losses}]L")
             st.write(f"`Level`: {summoner['summonerLevel']}")
-            st.write(f"`Tagline`: {name['tagLine']}")
+            st.write(f"`LP`: {ranks[0]['leaguePoints']}")
+            st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
+        with r:
+            st.image(
+                f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png")
+            st.subheader(ranks[0]['summonerName'])
 
         # NOTE: STATS
         st.write("##")

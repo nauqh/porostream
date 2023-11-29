@@ -13,10 +13,14 @@ def get_puuid(api_key, summoner, tagline):
 
 def get_info(api_key, puuid):
     url = f"https://vn2.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}?api_key={api_key}"
-    url2 = f"https://asia.api.riotgames.com/riot/account/v1/accounts/by-puuid/{puuid}?api_key={api_key}"
     resp = requests.get(url).json()
-    resp2 = requests.get(url2).json()
-    return resp, resp2
+    return resp
+
+
+def get_rank(api_key, info: dict) -> list[dict]:
+    url = f"https://vn2.api.riotgames.com/lol/league/v4/entries/by-summoner/{info['id']}?api_key={api_key}"
+    resp = requests.get(url).json()
+    return resp
 
 
 def get_match_ids(api_key, puuid, no_games, queue_id=None):
