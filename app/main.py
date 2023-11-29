@@ -26,7 +26,7 @@ def display_player(data):
 
     with l:
         # img = Image.open(f"img/rank/{data['tier']}.png")
-        st.image(f"{data['tier']}.png")
+        st.image(f"rank/{data['tier']}.png")
 
     with m:
         queue = {'RANKED_SOLO_5x5': 'Soloqueue',
