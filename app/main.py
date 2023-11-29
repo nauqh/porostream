@@ -272,4 +272,4 @@ if run:
 
             st.subheader("📍For more graphs, follow this link")
             st.link_button("League of Graphs",
-                           f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{ranks['summonerName']}-{tag}")
+                           f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
