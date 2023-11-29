@@ -262,12 +262,10 @@ if run:
                 st.subheader("☁️Time alive")
                 st.subheader(f"Longest {int(stats['timealive'])} min")
         with tab2:
-            fig = graph_personal(
-                match_df, player_df[~player_df['gameEndedInEarlySurrender']])
+            fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
-            fig = graph_dmgpersonal(
-                match_df, player_df[~player_df['gameEndedInEarlySurrender']])
+            fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
             st.subheader("📍For more graphs, follow this link")
