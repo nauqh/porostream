@@ -5,33 +5,40 @@ from stqdm import stqdm
 import streamlit as st
 
 
+class MissingRegionError(Exception):
+    pass
+
+
+class MissingQueueError(Exception):
+    pass
+
+
 def get_puuid(api_key, summoner, tagline):
     url = f"https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{summoner}/{tagline}?api_key={api_key}"
     resp = requests.get(url).json()
     return resp['puuid']
 
 
-def get_info(api_key, puuid):
-    url = f"https://vn2.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}?api_key={api_key}"
-    resp = requests.get(url).json()
-    return resp
-
-
-def get_rank(api_key, info: dict) -> list[dict]:
-    url = f"https://vn2.api.riotgames.com/lol/league/v4/entries/by-summoner/{info['id']}?api_key={api_key}"
-    resp = requests.get(url).json()
-    return resp
-
-
-def get_match_ids(api_key, puuid, no_games, queue_id=None):
-    url = f"https://sea.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count={no_games}&api_key={api_key}"
-
-    if queue_id:
-        url += "&queue=" + str(queue_id)
-
+def get_info(api_key, puuid, region):
+    url = f"https://{region.lower()}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}?api_key={api_key}"
     resp = requests.get(url)
-    match_ids = resp.json()
-    return match_ids
+    if resp.status_code == 404:
+        raise KeyError("Summoner not found")
+    return resp.json()
+
+
+def get_rank(api_key, info: dict, region) -> list[dict]:
+    url = f"https://{region.lower()}.api.riotgames.com/lol/league/v4/entries/by-summoner/{info['id']}?api_key={api_key}"
+    resp = requests.get(url)
+    if resp.status_code == 404:
+        raise KeyError("Summoner not found")
+    return resp.json()
+
+
+def get_match_ids(api_key, puuid, no_games, queue_id):
+    url = f"https://sea.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count={no_games}&api_key={api_key}&queue={queue_id}"
+    resp = requests.get(url)
+    return resp.json()
 
 
 def get_match_data(api_key, match_id):

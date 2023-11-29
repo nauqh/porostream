@@ -11,13 +11,13 @@ st.set_page_config(
     page_icon="img/favicon.png",
     layout="wide")
 
-puuids = {
-    'Thánh Chặt Xác': '8UIhStkspIglog9paowA4mXzlckT-xySwWNIFac3o2ojumva9ffkFMda_jGpW_hhInKWpvUp5pPPrA',
-    'Cozy Bearrrrr': 'mh3B8Naz1MbJ6RE7dJTu3ZCLh7Rwo6CCJQiA-fVlLXUuQmkibMVMztpCLALJMMJQm4QOevN1-u0lnA',
-    'indestructibleVN': 'DV0Aad31H16g3lItoojolWMPZQYOj0l90KzVSUV-qF3QlF92hOC_WLLssdR1MqPS-3UMEKp0Mn5woA',
-    'Obiwan': 'aTa5_43m0w8crNsi-i9nxGpSVU06WZBuK-h9bZEOK0g_lJox3XF4Dv4BzVwZieRj0QwlGnJ4SZbftg',
-    'Wavepin': 'idASdW5eSrO5Oih-ViK07RdeXE33JM1Mm3FwV7JiveTwbqfjl1vQUvToJ95c1B4EeQd8BAZgXkGSUw'
-}
+# puuids = {
+#     'Thánh Chặt Xác': '8UIhStkspIglog9paowA4mXzlckT-xySwWNIFac3o2ojumva9ffkFMda_jGpW_hhInKWpvUp5pPPrA',
+#     'Cozy Bearrrrr': 'mh3B8Naz1MbJ6RE7dJTu3ZCLh7Rwo6CCJQiA-fVlLXUuQmkibMVMztpCLALJMMJQm4QOevN1-u0lnA',
+#     'indestructibleVN': 'DV0Aad31H16g3lItoojolWMPZQYOj0l90KzVSUV-qF3QlF92hOC_WLLssdR1MqPS-3UMEKp0Mn5woA',
+#     'Obiwan': 'aTa5_43m0w8crNsi-i9nxGpSVU06WZBuK-h9bZEOK0g_lJox3XF4Dv4BzVwZieRj0QwlGnJ4SZbftg',
+#     'Wavepin': 'idASdW5eSrO5Oih-ViK07RdeXE33JM1Mm3FwV7JiveTwbqfjl1vQUvToJ95c1B4EeQd8BAZgXkGSUw'
+# }
 
 
 # TODO: Sidebar
@@ -29,20 +29,15 @@ with st.sidebar:
 # NOTE: SEARCH INPUT
 with st.sidebar:
     st.header("🔍Search summoner")
-    url = st.text_input(
-        "Enter summoner name and tag", "Obiwan, #HYM")
-    option = st.selectbox(
+    values = st.text_input(
+        "Enter name and tag separated by comma", "Obiwan ,HYM").split(',')
+    name, tag = [value.strip() for value in values]
+    region = st.selectbox(
         'Choose your region',
-        ('Asia', 'Europe', 'North America', 'Oceania'))
-    mode = st.multiselect(
+        ('VN2', 'OC1'), index=None)
+    mode = st.selectbox(
         'Choose game mode',
-        ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
-        ['Ranked Flex'])
-
-    st.header("🔒B.R.O")
-    summoner = st.selectbox(
-        'Choose summoner',
-        ('Thánh Chặt Xác', 'Cozy Bearrrrr', 'indestructibleVN', 'Obiwan', 'Wavepin', 'Tupac Shaco'), index=None)
+        ('Ranked Solo', 'Ranked Flex', 'Normal Blind', 'Normal Draft'), index=None)
 
     run = st.button("Find out")
 
@@ -62,128 +57,143 @@ st.markdown("""<h3 style='
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 """
 st.image("img/poros.jpg")
-# password = st.text_input("Login team", type="password")
+password = st.text_input("Enter password to unlock team info", type="password")
 
-# NOTE: TEAM RANKED
-st.write("##")
-with open('team.json', 'r') as f:
-    team = json.load(f)
+if password == "HYM":
+    # NOTE: TEAM RANKED
+    st.write("##")
+    with open('team.json', 'r') as f:
+        team = json.load(f)
 
-l, r = st.columns([1, 2])
-with l:
-    st.header("📑Team ranked")
-with r:
-    selected_player = st.selectbox(
-        'Summoner', list(team.keys()), index=4)
-
-data = team[selected_player]
-l, m, r = st.columns([1, 1, 1])
-
-with l:
-    st.image(
-        f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
-    st.link_button("Summoner Profile",
-                   f"https://www.op.gg/summoners/vn/{data['name']}")
-
-with m:
-    queue = {'RANKED_SOLO_5x5': 'Soloqueue',
-             'RANKED_FLEX_SR': 'Ranked Flex'}
-    st.write(
-        f"""<span style='font-weight: 200; font-size: 1rem'>{data['tier']} {data['rank']} {queue[data['queue']]}</span>""", unsafe_allow_html=True)
-    st.write(
-        f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 2.5rem'>{data['name']}</span>""", unsafe_allow_html=True)
-
-    wins, losses = data['wins'], data['losses']
-    st.subheader(f":blue[{wins}]W - :red[{losses}]L")
-    st.write(f"`Level`: {data['level']}")
-    st.write(f"`LP`: {data['lp']}")
-    st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
-with r:
-    st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
-
-
-# NOTE: LEADERBOARD
-st.write("##")
-df = pd.read_csv("extract.csv")
-
-st.header("⭐Leaderboard")
-tab1, tab2 = st.tabs(
-    ["Damage on Champions", "Vision Score"])
-
-with tab1:
-    l, r = st.columns([1, 1.5])
+    l, r = st.columns([1, 2])
     with l:
-        data = df.groupby('summonerName')[
-            'totalDamageDealtToChampions'].mean().to_dict()
-        fig = graph_dmg(data)
-        st.plotly_chart(fig, use_container_width=True)
-
+        st.header("📑Team ranked")
     with r:
-        tru = df.groupby('summonerName')[
-            'trueDamageDealtToChampions'].mean().to_dict()
-        phy = df.groupby('summonerName')[
-            'physicalDamageDealtToChampions'].mean().to_dict()
-        mag = df.groupby('summonerName')[
-            'magicDamageDealtToChampions'].mean().to_dict()
+        selected_player = st.selectbox(
+            'Summoner', list(team.keys()), index=4)
 
-        names = list(tru.keys())
-        physicals = list(phy.values())
-        trues = list(tru.values())
-        magics = list(mag.values())
-        fig = graph_dmgproportion(names, trues, physicals, magics)
-        st.plotly_chart(fig, use_container_width=True)
-with tab2:
-    l, r = st.columns([1, 1])
+    data = team[selected_player]
+    l, m, r = st.columns([1, 1, 1])
+
     with l:
-        data = df.groupby('summonerName')['visionScore'].mean().to_dict()
-        fig = graph_vision(data)
-        st.plotly_chart(fig, use_container_width=True)
-    with r:
-        st.subheader("What's a good vision score?")
+        st.image(
+            f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
+        st.link_button("Summoner Profile",
+                       f"https://www.op.gg/summoners/vn/{data['name']}")
+
+    with m:
+        queue = {'RANKED_SOLO_5x5': 'Soloqueue',
+                 'RANKED_FLEX_SR': 'Ranked Flex'}
         st.write(
-            "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
-        st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
-        fig = graph_winrate(df)
-        st.plotly_chart(fig, use_container_width=True)
+            f"""<span style='font-weight: 200; font-size: 1rem'>{data['tier']} {data['rank']} {queue[data['queue']]}</span>""", unsafe_allow_html=True)
+        st.write(
+            f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 2.5rem'>{data['name']}</span>""", unsafe_allow_html=True)
+
+        wins, losses = data['wins'], data['losses']
+        st.subheader(f":blue[{wins}]W - :red[{losses}]L")
+        st.write(f"`Level`: {data['level']}")
+        st.write(f"`LP`: {data['lp']}")
+        st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
+    with r:
+        st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
+
+    # NOTE: LEADERBOARD
+    st.write("##")
+    df = pd.read_csv("extract.csv")
+
+    st.header("⭐Leaderboard")
+    tab1, tab2 = st.tabs(
+        ["Damage on Champions", "Vision Score"])
+
+    with tab1:
+        l, r = st.columns([1, 1.5])
+        with l:
+            data = df.groupby('summonerName')[
+                'totalDamageDealtToChampions'].mean().to_dict()
+            fig = graph_dmg(data)
+            st.plotly_chart(fig, use_container_width=True)
+
+        with r:
+            tru = df.groupby('summonerName')[
+                'trueDamageDealtToChampions'].mean().to_dict()
+            phy = df.groupby('summonerName')[
+                'physicalDamageDealtToChampions'].mean().to_dict()
+            mag = df.groupby('summonerName')[
+                'magicDamageDealtToChampions'].mean().to_dict()
+
+            names = list(tru.keys())
+            physicals = list(phy.values())
+            trues = list(tru.values())
+            magics = list(mag.values())
+            fig = graph_dmgproportion(names, trues, physicals, magics)
+            st.plotly_chart(fig, use_container_width=True)
+    with tab2:
+        l, r = st.columns([1, 1])
+        with l:
+            data = df.groupby('summonerName')['visionScore'].mean().to_dict()
+            fig = graph_vision(data)
+            st.plotly_chart(fig, use_container_width=True)
+        with r:
+            st.subheader("What's a good vision score?")
+            st.write(
+                "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
+            st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
+            fig = graph_winrate(df)
+            st.plotly_chart(fig, use_container_width=True)
+else:
+    st.subheader("🔒Team info is locked")
 
 if run:
+    if region is None:
+        raise MissingRegionError("Please choose your region")
+    if mode is None:
+        raise MissingQueueError("Please choose game mode")
+    queues = {
+        "Ranked Flex": 440,
+        "Ranked Solo": 420,
+        "Normal Blind": 430,
+        "Normal Draft": 400,
+        "ARAM": 450
+    }
     TOKEN = settings.TOKEN
     try:
-        puuid = puuids[summoner]
-    except Exception:
-        st.subheader("💀Summoner has not been added")
-        st.write("Submit a form to add your summoner")
-        with st.form("my_form"):
-            key = st.text_input(
-                "Enter RIOT API key (optional)", "")
-            l, r = st.columns([1, 1])
-            with l:
-                url = st.text_input(
-                    "Enter summoner name and tag", "Obiwan, #HYM")
-            with r:
-                option = st.selectbox(
-                    'Choose your region',
-                    ('Asia', 'Europe', 'North America', 'Oceania'))
-            game = st.multiselect(
-                'Choose game mode',
-                ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
-                ['Ranked Flex', 'Nexus Blizt'])
-            slider_val = st.slider(
-                "Number of games", min_value=0, max_value=20, value=10)
-            checkbox_val = st.checkbox("Permission for using summoner data")
+        st.subheader(f"⌛Extracting data for {name}")
 
-            # Every form must have a submit button.
-            submitted = st.form_submit_button("Submit")
-            if submitted:
-                st.success("✅ Submitted application")
+        puuid = get_puuid(TOKEN, name, tag)
+        summoner = get_info(TOKEN, puuid, region)
+        ranks = get_rank(TOKEN, summoner, region)
+        ranks = ranks[0] if ranks else ranks
+        queue_id = queues[mode]
 
+        ids = get_match_ids(TOKEN, puuid, 10, queue_id)
+    except KeyError:
+        # st.subheader("💀Summoner has not been added")
+        # st.write("Submit a form to add your summoner")
+        # with st.form("my_form"):
+        #     key = st.text_input(
+        #         "Enter RIOT API key (optional)", "")
+        #     l, r = st.columns([1, 1])
+        #     with l:
+        #         url = st.text_input(
+        #             "Enter summoner name and tag", "Obiwan, #HYM")
+        #     with r:
+        #         option = st.selectbox(
+        #             'Choose your region',
+        #             ('Asia', 'Europe', 'North America', 'Oceania'))
+        #     game = st.multiselect(
+        #         'Choose game mode',
+        #         ['Normal', 'Ranked Flex', 'Aram', 'Nexus Blizt'],
+        #         ['Ranked Flex', 'Nexus Blizt'])
+        #     slider_val = st.slider(
+        #         "Number of games", min_value=0, max_value=20, value=10)
+        #     checkbox_val = st.checkbox("Permission for using summoner data")
+
+        #     # Every form must have a submit button.
+        #     submitted = st.form_submit_button("Submit")
+        #     if submitted:
+        #         st.success("✅ Submitted application")
+        st.error("💀Summoner not found")
     else:
-        st.subheader(f"⌛Extracting data for {summoner} ...")
-
-        summoner = get_info(TOKEN, puuid)
-        ranks = get_rank(TOKEN, summoner)
-
-        ids = get_match_ids(TOKEN, puuid, 10, queue_id=440)
         match_df, player_df = gather_data(TOKEN, puuid, ids)
 
         stats = transform(match_df, player_df)
@@ -195,28 +205,28 @@ if run:
             st.image(
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
             st.link_button("Summoner Profile",
-                           f"https://www.op.gg/summoners/vn/{ranks[0]['summonerName']}")
+                           f"https://www.op.gg/summoners/vn/{ranks['summonerName']}")
         with m:
             queue = {
                 'RANKED_SOLO_5x5': 'Soloqueue',
                 'RANKED_FLEX_SR': 'Ranked Flex'
             }
             st.write(f"""<span style='
-                    font-weight: 200; font-size: 1rem'>{ranks[0]['tier'].capitalize()} {ranks[0]['rank']}{queue[ranks[0]['queueType']]}</span>""",
+                    font-weight: 200; font-size: 1rem'>{ranks['tier'].capitalize()} {ranks['rank']}{queue[ranks['queueType']]}</span>""",
                      unsafe_allow_html=True)
             st.write(f"""<span style='
                     font-family: Recoleta-Regular; font-weight: 400;
-                    font-size: 2.5rem'>{ranks[0]['summonerName']}</span>""",
+                    font-size: 2.5rem'>{ranks['summonerName']}</span>""",
                      unsafe_allow_html=True)
 
-            wins = ranks[0]['wins']
-            losses = ranks[0]['losses']
+            wins = ranks['wins']
+            losses = ranks['losses']
             st.subheader(f":blue[{wins}]W - :red[{losses}]L")
             st.write(f"`Level`: {summoner['summonerLevel']}")
-            st.write(f"`LP`: {ranks[0]['leaguePoints']}")
+            st.write(f"`LP`: {ranks['leaguePoints']}")
             st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
         with r:
-            st.image(f"img/rank/{ranks[0]['tier']}.png", width=300)
+            st.image(f"img/rank/{ranks['tier']}.png", width=300)
 
         # NOTE: STATS
         st.write("##")
@@ -266,4 +276,4 @@ if run:
 
             st.subheader("📍For more graphs, follow this link")
             st.link_button("League of Graphs",
-                           f"https://www.leagueofgraphs.com/summoner/vn/{ranks[0]['summonerName']}")
+                           f"https://www.leagueofgraphs.com/summoner/vn/{ranks['summonerName']}")
