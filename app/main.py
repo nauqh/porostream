@@ -25,7 +25,7 @@ def display_player(data):
     l, m, r = st.columns([1, 1, 1])
 
     with l:
-        img = Image.open(f"rank/{data['tier']}.png")
+        img = Image.open(f"img/rank/{data['tier']}.png")
         st.image(img)
 
     with m:
