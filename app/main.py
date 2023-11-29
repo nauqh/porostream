@@ -157,7 +157,7 @@ if run:
     }
     TOKEN = settings.TOKEN
     try:
-        st.subheader(f"⌛Extracting data for {name}")
+        st.subheader(f"⌛Extracting data for `{name}`")
 
         puuid = get_puuid(TOKEN, name, tag)
         summoner = get_info(TOKEN, puuid, region)
@@ -205,7 +205,7 @@ if run:
             st.image(
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
             st.link_button("Summoner Profile",
-                           f"https://www.op.gg/summoners/vn/{ranks['summonerName']}")
+                           f"https://www.op.gg/summoners/{region}/{ranks['summonerName']}")
         with m:
             queue = {
                 'RANKED_SOLO_5x5': 'Soloqueue',
@@ -276,4 +276,4 @@ if run:
 
             st.subheader("📍For more graphs, follow this link")
             st.link_button("League of Graphs",
-                           f"https://www.leagueofgraphs.com/summoner/vn/{ranks['summonerName']}")
+                           f"https://www.leagueofgraphs.com/summoner/{region}/{ranks['summonerName']}")
