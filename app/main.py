@@ -190,7 +190,6 @@ if run:
         st.error("💀Summoner not found")
     else:
         match_df, player_df = gather_data(TOKEN, puuid, ids)
-        player_df = player_df[player_df['gameEndedInEarlySurrender'] != True]
         stats = transform(match_df, player_df)
 
         # NOTE: PROFILE
@@ -263,10 +262,12 @@ if run:
                 st.subheader("☁️Time alive")
                 st.subheader(f"Longest {int(stats['timealive'])} min")
         with tab2:
-            fig = graph_personal(match_df, player_df)
+            fig = graph_personal(
+                match_df, player_df[~player_df['gameEndedInEarlySurrender']])
             st.plotly_chart(fig, use_container_width=True)
 
-            fig = graph_dmgpersonal(match_df, player_df)
+            fig = graph_dmgpersonal(
+                match_df, player_df[~player_df['gameEndedInEarlySurrender']])
             st.plotly_chart(fig, use_container_width=True)
 
             st.subheader("📍For more graphs, follow this link")
