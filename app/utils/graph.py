@@ -177,15 +177,6 @@ def graph_personal(matchdf, playerdf):
         else:
             fig.add_trace(trace)
 
-    line_trace = go.Scatter(x=[matchdf['gameCreation'][max_difference_index], matchdf['gameCreation'][max_difference_index]],
-                            y=[matchdf['CSperMin'][max_difference_index],
-                               matchdf['GoldperMin'][max_difference_index]],
-                            mode='lines',
-                            line=dict(color="#ffc300", width=2, dash="dash"),
-                            name='CS/Gold Max Difference')
-
-    fig.add_trace(line_trace, secondary_y=True)
-
     fig.update_layout(title="Laning statistics", title_font_size=25,
                       height=500,
                       legend=dict(orientation="h", yanchor="top",
