@@ -63,7 +63,44 @@ st.markdown("""<h3 style='
 """
 st.image("img/poros.jpg")
 
+# NOTE: TEAM RANKED
+st.write("##")
+with open('team.json', 'r') as f:
+    team = json.load(f)
+
+l, r = st.columns([1, 2])
+with l:
+    st.header("📑Team ranked")
+with r:
+    selected_player = st.selectbox(
+        'Summoner', list(team.keys()))
+
+data = team[selected_player]
+l, m, r = st.columns([1, 1, 1])
+
+with l:
+    st.image(
+        f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
+    st.link_button("Summoner Profile",
+                   f"https://www.op.gg/summoners/vn/{data['name']}")
+with m:
+    queue = {'RANKED_SOLO_5x5': 'Soloqueue',
+             'RANKED_FLEX_SR': 'Ranked Flex'}
+    st.write(
+        f"""<span style='font-weight: 200; font-size: 1rem'>{data['tier']} {data['rank']} {queue[data['queue']]}</span>""", unsafe_allow_html=True)
+    st.write(
+        f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 2.5rem'>{data['name']}</span>""", unsafe_allow_html=True)
+
+    wins, losses = data['wins'], data['losses']
+    st.subheader(f":blue[{wins}]W - :red[{losses}]L")
+    st.write(f"`Level`: {data['level']}")
+    st.write(f"`LP`: {data['lp']}")
+    st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
+with r:
+    st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
+
 # NOTE: LEADERBOARD
+st.write("##")
 df = pd.read_csv("extract.csv")
 
 st.header("⭐Leaderboard")
@@ -105,41 +142,6 @@ with tab2:
         st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
         fig = graph_winrate(df)
         st.plotly_chart(fig, use_container_width=True)
-
-# NOTE: TEAM RANKED
-with open('team.json', 'r') as f:
-    team = json.load(f)
-
-l, r = st.columns([1, 2])
-with l:
-    st.header("📑Team ranked")
-with r:
-    selected_player = st.selectbox(
-        'Summoner', list(team.keys()))
-
-data = team[selected_player]
-l, m, r = st.columns([1, 1, 1])
-
-with l:
-    st.image(
-        f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
-    st.link_button("Summoner Profile",
-                   f"https://www.op.gg/summoners/vn/{data['name']}")
-with m:
-    queue = {'RANKED_SOLO_5x5': 'Soloqueue',
-             'RANKED_FLEX_SR': 'Ranked Flex'}
-    st.write(
-        f"""<span style='font-weight: 200; font-size: 1rem'>{data['tier']} {data['rank']} {queue[data['queue']]}</span>""", unsafe_allow_html=True)
-    st.write(
-        f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 2.5rem'>{data['name']}</span>""", unsafe_allow_html=True)
-
-    wins, losses = data['wins'], data['losses']
-    st.subheader(f":blue[{wins}]W - :red[{losses}]L")
-    st.write(f"`Level`: {data['level']}")
-    st.write(f"`LP`: {data['lp']}")
-    st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
-with r:
-    st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
 
 if run:
     TOKEN = settings.TOKEN
