@@ -61,7 +61,7 @@ st.markdown("""<h3 style='
 ![Plotly](https://img.shields.io/badge/plotly%20-%2300416A.svg?&style=for-the-badge&logo=pandas&logoColor=white)
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 """
-st.image("img/sample.png")
+st.image("img/poros.jpg")
 
 # NOTE: LEADERBOARD
 df = pd.read_csv("extract.csv")
