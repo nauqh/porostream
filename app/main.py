@@ -176,7 +176,7 @@ if run:
                 st.success("✅ Submitted application")
 
     else:
-        st.subheader("⌛Extracting data from RIOT API ...")
+        st.subheader(f"⌛Extracting data for {summoner} ...")
 
         summoner = get_info(TOKEN, puuid)
         ranks = get_rank(TOKEN, summoner)
@@ -190,18 +190,21 @@ if run:
         st.write("##")
         l, m, r = st.columns([1, 1, 1])
         with l:
-            st.image(f"img/rank/{ranks[0]['tier']}.png")
+            st.image(
+                f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
+            st.link_button("Summoner Profile",
+                           f"https://www.op.gg/summoners/vn/{ranks[0]['summonerName']}")
         with m:
             queue = {
                 'RANKED_SOLO_5x5': 'Soloqueue',
                 'RANKED_FLEX_SR': 'Ranked Flex'
             }
             st.write(f"""<span style='
-                    font-weight: 200; font-size: 1rem'>{queue[ranks[0]['queueType']]}</span>""",
+                    font-weight: 200; font-size: 1rem'>{ranks[0]['tier'].capitalize()} {ranks[0]['rank']}{queue[ranks[0]['queueType']]}</span>""",
                      unsafe_allow_html=True)
             st.write(f"""<span style='
                     font-family: Recoleta-Regular; font-weight: 400;
-                    font-size: 3rem'>{ranks[0]['tier'].capitalize()} {ranks[0]['rank']}</span>""",
+                    font-size: 2.5rem'>{ranks[0]['summonerName']}</span>""",
                      unsafe_allow_html=True)
 
             wins = ranks[0]['wins']
@@ -211,9 +214,7 @@ if run:
             st.write(f"`LP`: {ranks[0]['leaguePoints']}")
             st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
         with r:
-            st.image(
-                f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png")
-            st.subheader(ranks[0]['summonerName'])
+            st.image(f"img/rank/{ranks[0]['tier']}.png", width=300)
 
         # NOTE: STATS
         st.write("##")
