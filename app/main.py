@@ -84,6 +84,7 @@ with l:
         f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
     st.link_button("Summoner Profile",
                    f"https://www.op.gg/summoners/vn/{data['name']}")
+
 with m:
     queue = {'RANKED_SOLO_5x5': 'Soloqueue',
              'RANKED_FLEX_SR': 'Ranked Flex'}
@@ -99,6 +100,7 @@ with m:
     st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
 with r:
     st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
+
 
 # NOTE: LEADERBOARD
 st.write("##")
@@ -261,3 +263,7 @@ if run:
 
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
+
+            st.subheader("For more graphs, follow this link")
+            st.link_button("League of Graphs",
+                           f"https://www.leagueofgraphs.com/summoner/vn/{ranks[0]['summonerName']}")
