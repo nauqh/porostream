@@ -3,6 +3,7 @@ from utils.config import settings
 from utils.riot import *
 from utils.graph import *
 import pandas as pd
+import json
 
 
 st.set_page_config(
@@ -17,6 +18,32 @@ puuids = {
     'Obiwan': 'aTa5_43m0w8crNsi-i9nxGpSVU06WZBuK-h9bZEOK0g_lJox3XF4Dv4BzVwZieRj0QwlGnJ4SZbftg',
     'Wavepin': 'idASdW5eSrO5Oih-ViK07RdeXE33JM1Mm3FwV7JiveTwbqfjl1vQUvToJ95c1B4EeQd8BAZgXkGSUw'
 }
+
+
+def display_player(data):
+    l, m, r = st.columns([1, 1, 1])
+
+    with l:
+        st.image(f"img/rank/{data['tier']}.png")
+
+    with m:
+        queue = {'RANKED_SOLO_5x5': 'Soloqueue',
+                 'RANKED_FLEX_SR': 'Ranked Flex'}
+        st.write(
+            f"""<span style='font-weight: 200; font-size: 1rem'>{queue[data['queue']]}</span>""", unsafe_allow_html=True)
+        st.write(
+            f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem'>{data['tier']} {data['rank']}</span>""", unsafe_allow_html=True)
+
+        wins, losses = data['wins'], data['losses']
+        st.subheader(f":blue[{wins}]W - :red[{losses}]L")
+        st.write(f"`Level`: {data['level']}")
+        st.write(f"`LP`: {data['lp']}")
+        st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
+
+    with r:
+        st.image(
+            f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png")
+        st.subheader(data['name'])
 
 
 # TODO: Sidebar
@@ -105,6 +132,15 @@ with tab2:
         fig = graph_winrate(df)
         st.plotly_chart(fig, use_container_width=True)
 
+# NOTE: TEAM RANKED
+st.header("🧑‍💻Team ranked")
+
+with open('team.json', 'r') as f:
+    team = json.load(f)
+
+selected_player = st.selectbox(
+    '', list(team.keys()))
+display_player(team[selected_player])
 
 if run:
     TOKEN = settings.TOKEN

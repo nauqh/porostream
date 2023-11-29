@@ -1,0 +1,57 @@
+{
+    "Th\u00e1nh Ch\u1eb7t X\u00e1c": {
+        "queue": "RANKED_SOLO_5x5",
+        "tier": "Emerald",
+        "rank": "IV",
+        "wins": 78,
+        "losses": 76,
+        "lp": 46,
+        "level": 295,
+        "icon": 5630,
+        "name": "Th\u00e1nh Ch\u1eb7t X\u00e1c"
+    },
+    "Cozy Bearrrrr": {
+        "queue": "RANKED_SOLO_5x5",
+        "tier": "Emerald",
+        "rank": "III",
+        "wins": 32,
+        "losses": 36,
+        "lp": 16,
+        "level": 525,
+        "icon": 5766,
+        "name": "Cozy Bearrrrr"
+    },
+    "indestructibleVN": {
+        "queue": "RANKED_FLEX_SR",
+        "tier": "Platinum",
+        "rank": "IV",
+        "wins": 53,
+        "losses": 44,
+        "lp": 37,
+        "level": 379,
+        "icon": 4607,
+        "name": "UnbeatableVN"
+    },
+    "Obiwan": {
+        "queue": "RANKED_FLEX_SR",
+        "tier": "Silver",
+        "rank": "III",
+        "wins": 66,
+        "losses": 72,
+        "lp": 32,
+        "level": 397,
+        "icon": 5875,
+        "name": "Th\u00e1nh B\u1eeda L\u1ed3n"
+    },
+    "Wavepin": {
+        "queue": "RANKED_FLEX_SR",
+        "tier": "Silver",
+        "rank": "III",
+        "wins": 36,
+        "losses": 34,
+        "lp": 37,
+        "level": 345,
+        "icon": 6284,
+        "name": "Wavepin"
+    }
+}
