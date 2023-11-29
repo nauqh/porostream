@@ -3,7 +3,6 @@ import requests
 import pandas as pd
 from stqdm import stqdm
 import streamlit as st
-from math import ceil
 
 
 def get_puuid(api_key, summoner, tagline):
