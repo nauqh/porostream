@@ -11,15 +11,6 @@ st.set_page_config(
     page_icon="img/favicon.png",
     layout="wide")
 
-# puuids = {
-#     'Thánh Chặt Xác': '8UIhStkspIglog9paowA4mXzlckT-xySwWNIFac3o2ojumva9ffkFMda_jGpW_hhInKWpvUp5pPPrA',
-#     'Cozy Bearrrrr': 'mh3B8Naz1MbJ6RE7dJTu3ZCLh7Rwo6CCJQiA-fVlLXUuQmkibMVMztpCLALJMMJQm4QOevN1-u0lnA',
-#     'indestructibleVN': 'DV0Aad31H16g3lItoojolWMPZQYOj0l90KzVSUV-qF3QlF92hOC_WLLssdR1MqPS-3UMEKp0Mn5woA',
-#     'Obiwan': 'aTa5_43m0w8crNsi-i9nxGpSVU06WZBuK-h9bZEOK0g_lJox3XF4Dv4BzVwZieRj0QwlGnJ4SZbftg',
-#     'Wavepin': 'idASdW5eSrO5Oih-ViK07RdeXE33JM1Mm3FwV7JiveTwbqfjl1vQUvToJ95c1B4EeQd8BAZgXkGSUw'
-# }
-
-
 # TODO: Sidebar
 with st.sidebar:
     st.write("## 📝About the project")
@@ -35,9 +26,14 @@ with st.sidebar:
     region = st.selectbox(
         'Choose your region',
         ('VN2', 'OC1'), index=None)
-    mode = st.selectbox(
-        'Choose game mode',
-        ('Ranked Solo', 'Ranked Flex', 'Normal Blind', 'Normal Draft'), index=None)
+    if region == 'OC1':
+        mode = st.selectbox(
+            'Choose game mode',
+            ('Ranked Solo', 'Normal Draft'), index=None)
+    else:
+        mode = st.selectbox(
+            'Choose game mode',
+            ('Ranked Solo', 'Ranked Flex', 'Normal Blind', 'Normal Draft'), index=None)
 
     run = st.button("Find out")
 
