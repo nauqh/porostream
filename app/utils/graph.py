@@ -229,7 +229,8 @@ def graph_dmgpersonal(matchdf, playerdf):
         y=round(matchdf['DmgperMin'], 2),
         mode='lines+markers',
         name="DamageperMin",
-        hovertemplate='%{y}'
+        hovertemplate='%{y} <br> Champion: %{customdata}',
+        customdata=playerdf['championName']
     ))
 
     fig.add_trace(go.Bar(
