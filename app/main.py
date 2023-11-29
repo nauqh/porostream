@@ -138,7 +138,7 @@ if run:
                 st.success("✅ Submitted application")
 
     else:
-        st.subheader("⌛Extracting data from RIOT API")
+        st.subheader("⌛Extracting data from RIOT API ...")
 
         summoner = get_info(TOKEN, puuid)
         ranks = get_rank(TOKEN, summoner)
