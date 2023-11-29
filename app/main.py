@@ -73,7 +73,7 @@ with l:
     st.header("📑Team ranked")
 with r:
     selected_player = st.selectbox(
-        'Summoner', list(team.keys()))
+        'Summoner', list(team.keys()), index=4)
 
 data = team[selected_player]
 l, m, r = st.columns([1, 1, 1])
