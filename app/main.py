@@ -201,7 +201,7 @@ if run:
             st.image(
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
             st.link_button("Summoner Profile",
-                           f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{ranks['summonerName']}")
+                           f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{name}")
         with m:
             queue = {
                 'RANKED_SOLO_5x5': 'Soloqueue',
