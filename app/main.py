@@ -299,6 +299,6 @@ if run:
         for col, (champ_name, data) in zip(columns, champions.items()):
             col.image(
                 f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
-            col.write(f"Winrate {data['winrate']:.1s}%")
+            col.write(f"Winrate {data['winrate']:.0f}%")
             col.write(f"KDA {data['kda']:.1f}")
             col.write(f"Damage {data['totalDamageDealtToChampions']:,.0f}")
