@@ -283,9 +283,10 @@ if run:
             agg_stats_df['kills'] + agg_stats_df['assists']) / agg_stats_df['deaths'].replace(0, 1)
 
         # Create another DataFrame for winrate
-        agg_winrate_df = player_df.groupby('championName')['win'].value_counts(
-            normalize=True).unstack(fill_value=0)
-        agg_winrate_df['winrate'] = (agg_winrate_df[True] * 100)
+        agg_winrate_df = player_df.groupby('championName')[
+            'win'].value_counts().unstack(fill_value=0)
+        agg_winrate_df['winrate'] = (
+            agg_winrate_df[True] / (agg_winrate_df[True]+agg_winrate_df[False]))*100
 
         # Include win and lose count columns
         agg_winrate_df = agg_winrate_df.reset_index().rename(
