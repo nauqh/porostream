@@ -285,12 +285,14 @@ if run:
         # Create another DataFrame for winrate
         agg_winrate_df = player_df.groupby('championName')['win'].value_counts(
             normalize=True).unstack(fill_value=0)
-        agg_winrate_df = (agg_winrate_df[True]
-                          * 100).reset_index(name='winrate')
+        agg_winrate_df['winrate'] = (agg_winrate_df[True] * 100)
+
+        # Include win and lose count columns
+        agg_winrate_df = agg_winrate_df.reset_index().rename(
+            columns={True: 'win', False: 'lose'})
 
         # Merge the two DataFrames on 'championName'
         agg_df = pd.merge(agg_stats_df, agg_winrate_df, on='championName')
-
         champions = agg_df.set_index('championName').to_dict(orient='index')
         champions = dict(list(champions.items())[:4])
 
@@ -300,5 +302,6 @@ if run:
             col.image(
                 f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
             col.write(f"Winrate {data['winrate']:.0f}%")
+            col.write(f":blue[{data['win']:.0f}]W - :red[{data['lose']:.0f}]L")
             col.write(f"KDA {data['kda']:.1f}")
             col.write(f"Damage {data['totalDamageDealtToChampions']:,.0f}")
