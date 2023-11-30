@@ -188,7 +188,7 @@ if run:
         #     submitted = st.form_submit_button("Submit")
         #     if submitted:
         #         st.success("✅ Submitted application")
-        st.error("💀Summoner not found")
+        st.error("🍎Summoner not found")
     else:
         match_df, player_df = gather_data(TOKEN, puuid, ids)
         stats = transform(match_df, player_df)
@@ -225,7 +225,7 @@ if run:
 
         # NOTE: STATS
         st.write("##")
-        st.header("📰Last 10 games")
+        st.header("📌Last 10 games")
         tab1, tab2 = st.tabs(
             ["Summary", "Metrics over Time"])
         with tab1:
@@ -270,7 +270,7 @@ if run:
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
-            st.info("📭Follow the link below for more visualisations")
+            st.info("📘Follow the link below for more visualisations")
             st.link_button("League of Graphs",
                            f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
 
