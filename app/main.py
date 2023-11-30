@@ -224,7 +224,7 @@ if run:
 
         # NOTE: STATS
         st.write("##")
-        st.header("📍Summary of last 10 games")
+        st.header("📰Last 10 games")
         tab1, tab2 = st.tabs(
             ["Summary", "Metrics over Time"])
         with tab1:
@@ -269,7 +269,7 @@ if run:
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
-            st.subheader("📍For more graphs, follow this link")
+            st.info("Follow the link below for more visualisations")
             st.link_button("League of Graphs",
                            f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
 
