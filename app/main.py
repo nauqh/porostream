@@ -190,7 +190,6 @@ if run:
         st.error("💀Summoner not found")
     else:
         match_df, player_df = gather_data(TOKEN, puuid, ids)
-        player_df.to_csv("player_df.csv")
         stats = transform(match_df, player_df)
 
         # NOTE: PROFILE
@@ -273,6 +272,8 @@ if run:
             st.link_button("League of Graphs",
                            f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
 
+        # NOTE: STATS
+        st.write("##")
         st.header("Champions")
         stats = ['totalDamageDealtToChampions', 'kills', 'deaths', 'assists']
 
