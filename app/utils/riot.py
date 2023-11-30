@@ -97,8 +97,8 @@ def transform(match_df: pd.DataFrame, player_df: pd.DataFrame):
     stats.update({
         'dmg': player_df['totalDamageDealtToChampions'].mean(),
         'penta': player_df['pentaKills'].sum(),
-        'wins': player_df['win'].value_counts().values[1],
-        'loses': player_df['win'].value_counts().values[0],
+        'wins': player_df['win'].value_counts().to_dict()[True],
+        'loses': player_df['win'].value_counts().to_dict()[False],
     })
 
     # Achievements (time in sec)
