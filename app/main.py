@@ -53,6 +53,7 @@ st.markdown("""<h3 style='
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 """
 st.image("img/poros.jpg")
+st.write("##")
 st.subheader("🔒Team info is locked")
 password = st.text_input("Enter password to unlock team info", type="password")
 
