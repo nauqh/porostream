@@ -294,7 +294,6 @@ if run:
         # Merge the two DataFrames on 'championName'
         agg_df = pd.merge(agg_stats_df, agg_winrate_df, on='championName')
         champions = agg_df.set_index('championName').to_dict(orient='index')
-        champions = dict(list(champions.items())[:4])
 
         columns = st.columns(len(champions))
 
