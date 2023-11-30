@@ -13,13 +13,13 @@ class MissingQueueError(Exception):
     pass
 
 
-def get_puuid(api_key, summoner, tagline):
+def get_puuid(api_key, summoner, tagline) -> str:
     url = f"https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{summoner}/{tagline}?api_key={api_key}"
     resp = requests.get(url).json()
     return resp['puuid']
 
 
-def get_info(api_key, puuid, region):
+def get_info(api_key, puuid, region) -> dict:
     url = f"https://{region.lower()}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}?api_key={api_key}"
     resp = requests.get(url)
     if resp.status_code == 404:
@@ -35,13 +35,13 @@ def get_rank(api_key, info: dict, region) -> list[dict]:
     return resp.json()
 
 
-def get_match_ids(api_key, puuid, no_games, queue_id):
+def get_match_ids(api_key, puuid, no_games, queue_id) -> list:
     url = f"https://sea.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count={no_games}&api_key={api_key}&queue={queue_id}"
     resp = requests.get(url)
     return resp.json()
 
 
-def get_match_data(api_key, match_id):
+def get_match_data(api_key, match_id) -> dict:
     url = f"https://sea.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={api_key}"
 
     while True:

@@ -155,9 +155,6 @@ def graph_personal(matchdf, playerdf):
     matchdf['CS_Gold_Difference'] = abs(
         matchdf['CSperMin'] - matchdf['GoldperMin'])
 
-    # Find the index where the difference is the highest
-    max_difference_index = matchdf['CS_Gold_Difference'].idxmax()
-
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
     metrics = ['VisionperMin', 'CSperMin', 'GoldperMin']
