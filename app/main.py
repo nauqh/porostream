@@ -278,12 +278,20 @@ if run:
         stats = ['totalDamageDealtToChampions', 'kills', 'deaths', 'assists']
 
         # Create a DataFrame with the aggregated data
-        agg_df = player_df.groupby('championName')[stats].mean()
-        agg_df['kda'] = (agg_df['kills'] + agg_df['assists']
-                         ) / agg_df['deaths'].replace(0, 1)
+        agg_stats_df = player_df.groupby('championName')[stats].mean()
+        agg_stats_df['kda'] = (
+            agg_stats_df['kills'] + agg_stats_df['assists']) / agg_stats_df['deaths'].replace(0, 1)
 
-        # Convert the DataFrame to a dictionary with 'championName' as the index
-        champions = agg_df.to_dict(orient='index')
+        # Create another DataFrame for winrate
+        agg_winrate_df = player_df.groupby('championName')['win'].value_counts(
+            normalize=True).unstack(fill_value=0)
+        agg_winrate_df = (agg_winrate_df[True]
+                          * 100).reset_index(name='winrate')
+
+        # Merge the two DataFrames on 'championName'
+        agg_df = pd.merge(agg_stats_df, agg_winrate_df, on='championName')
+
+        champions = agg_df.set_index('championName').to_dict(orient='index')
         champions = dict(list(champions.items())[:4])
 
         columns = st.columns(len(champions))
@@ -291,5 +299,6 @@ if run:
         for col, (champ_name, data) in zip(columns, champions.items()):
             col.image(
                 f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
+            col.write(f"Winrate {data['winrate']:.1s}%")
             col.write(f"KDA {data['kda']:.1f}")
             col.write(f"Damage {data['totalDamageDealtToChampions']:,.0f}")
