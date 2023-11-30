@@ -274,7 +274,7 @@ if run:
 
         # NOTE: STATS
         st.write("##")
-        st.header("☕Champions")
+        st.header("Champions")
         stats = ['totalDamageDealtToChampions', 'kills', 'deaths', 'assists']
 
         # Create a DataFrame with the aggregated data
