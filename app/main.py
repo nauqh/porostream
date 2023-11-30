@@ -78,7 +78,6 @@ if password == "HYM":
             f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
         st.link_button("Summoner Profile",
                        f"https://www.op.gg/summoners/vn/{data['name']}")
-
     with m:
         queue = {'RANKED_SOLO_5x5': 'Soloqueue',
                  'RANKED_FLEX_SR': 'Ranked Flex'}
@@ -91,7 +90,7 @@ if password == "HYM":
         st.subheader(f":blue[{wins}]W - :red[{losses}]L")
         st.write(f"`Level`: {data['level']}")
         st.write(f"`LP`: {data['lp']}")
-        st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
+        st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
     with r:
         st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
 
@@ -191,6 +190,7 @@ if run:
         st.error("💀Summoner not found")
     else:
         match_df, player_df = gather_data(TOKEN, puuid, ids)
+        player_df.to_csv("player_df.csv")
         stats = transform(match_df, player_df)
 
         # NOTE: PROFILE
@@ -219,7 +219,7 @@ if run:
             st.subheader(f":blue[{wins}]W - :red[{losses}]L")
             st.write(f"`Level`: {summoner['summonerLevel']}")
             st.write(f"`LP`: {ranks['leaguePoints']}")
-            st.write(f"`Winrate`: {round((wins/(wins+losses))*100, 1)}%")
+            st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
         with r:
             st.image(f"img/rank/{ranks['tier']}.png", width=300)
 
@@ -235,7 +235,7 @@ if run:
                     f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L")
             with m:
                 st.subheader("🏆Winrates")
-                st.subheader(f"{round((stats['wins']/10), 2)*100} %")
+                st.subheader(f"{(stats['wins']/10)*100:.1f} %")
             with r:
                 st.subheader("⚔️KDA")
                 st.subheader(
@@ -244,7 +244,7 @@ if run:
             l, m, r = st.columns([1, 1, 1])
             with l:
                 st.subheader("🥊Damage")
-                st.subheader(stats['dmg'])
+                st.subheader(f"{stats['dmg']:,.0f}")
             with m:
                 st.subheader("👑Pentakills")
                 st.subheader(stats['penta'])
@@ -272,3 +272,23 @@ if run:
             st.subheader("📍For more graphs, follow this link")
             st.link_button("League of Graphs",
                            f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
+
+        st.header("Champions")
+        stats = ['totalDamageDealtToChampions', 'kills', 'deaths', 'assists']
+
+        # Create a DataFrame with the aggregated data
+        agg_df = player_df.groupby('championName')[stats].mean()
+        agg_df['kda'] = (agg_df['kills'] + agg_df['assists']
+                         ) / agg_df['deaths'].replace(0, 1)
+
+        # Convert the DataFrame to a dictionary with 'championName' as the index
+        champions = agg_df.to_dict(orient='index')
+        champions = dict(list(champions.items())[:4])
+
+        columns = st.columns(len(champions))
+
+        for col, (champ_name, data) in zip(columns, champions.items()):
+            col.image(
+                f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
+            col.write(f"KDA {data['kda']:.1f}")
+            col.write(f"Damage {data['totalDamageDealtToChampions']:,.0f}")

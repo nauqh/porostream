@@ -15,7 +15,7 @@ def graph_dmg(data: dict):
                                 text=damages, textposition='outside', texttemplate='%{text:,.0f}',
                                 marker=dict(
                                     color=['#1e96fc' if i == max_dmg_index else '#ffc300' for i in names]),
-                                hovertemplate='Damage: %{y}', name=''))
+                                hovertemplate='Damage: %{y:,.0f}', name=''))
 
     # Update the layout for better visualization
     fig.update_layout(title='Damage on Champions', title_font_size=20,
@@ -66,7 +66,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         marker=dict(
             color='#ff9500'
         ),
-        hovertemplate='%{x}'
+        hovertemplate='%{x:,.0f}'
     ))
     fig.add_trace(go.Bar(
         y=names,
@@ -76,7 +76,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         marker=dict(
             color='#ffc300'
         ),
-        hovertemplate='%{x}'
+        hovertemplate='%{x:,.0f}'
     ))
     fig.add_trace(go.Bar(
         y=names,
@@ -86,7 +86,7 @@ def graph_dmgproportion(names, trues, physicals, magics):
         marker=dict(
             color='#ffdd00'
         ),
-        hovertemplate='%{x}'
+        hovertemplate='%{x:,.0f}'
     ))
 
     fig.update_layout(title='Damage Proportion', barmode='stack', title_font_size=20,
