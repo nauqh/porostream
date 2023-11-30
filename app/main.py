@@ -57,6 +57,7 @@ st.write("##")
 st.subheader("🔒Team info is locked")
 password = st.text_input("Enter password to unlock team info", type="password")
 
+
 if password == "HYM":
     # NOTE: TEAM RANKED
     st.write("##")
@@ -302,8 +303,28 @@ if run:
         for col, (champ_name, data) in zip(columns, champions.items()):
             col.image(
                 f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
-
-            col.write(f"Winrate {data['winrate']:.0f}%")
             col.write(
-                f"KDA :green[{data['kda']:.1f}] :blue[{data['win']:.0f}]W - :red[{data['lose']:.0f}]L")
-            col.write(f"Damage {data['totalDamageDealtToChampions']:,.0f}")
+                f""":yellow[Winrate {data['winrate']:.0f}%] 
+                :yellow[KDA :green[{data['kda']:.1f}] :blue[{data['win']:.0f}]W - :red[{data['lose']:.0f}]L] 
+                :yellow[Damage {data['totalDamageDealtToChampions']:,.0f}]
+                """)
+
+        # NOTE: STATS
+        st.write("##")
+        st.header("✒️Signature")
+
+        name = player_df['championName'].value_counts().idxmax()
+        champion = requests.get(
+            f"https://ddragon.leagueoflegends.com/cdn/13.23.1/data/en_US/champion/{name}.json").json()['data'][name]
+
+        l, r = st.columns([1.5, 1])
+        with l:
+            st.image(
+                f"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{name}_0.jpg")
+        with r:
+            st.write(
+                f"""<h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 1.5rem; text-align: center;color:#ffc300'>{champion['title']}</h3>
+                    <h1 style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem; text-align: center; color:#ffdd00'>{champion['name']}</h1>""", unsafe_allow_html=True)
+            st.write(
+                f"""<span style='margin: 0 2rem'>{champion['blurb']}</span>""", unsafe_allow_html=True)
+            st.write(f":blue[ROLE:] {', '.join(champion['tags'])}")
