@@ -224,6 +224,7 @@ if run:
 
         # NOTE: STATS
         st.write("##")
+        st.header("📍Summary of last 10 games")
         tab1, tab2 = st.tabs(
             ["Summary", "Metrics over Time"])
         with tab1:
@@ -274,7 +275,7 @@ if run:
 
         # NOTE: STATS
         st.write("##")
-        st.header("Champions")
+        st.header("🏆Champions")
         stats = ['totalDamageDealtToChampions', 'kills', 'deaths', 'assists']
 
         # Create a DataFrame with the aggregated data
