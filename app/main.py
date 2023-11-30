@@ -269,7 +269,7 @@ if run:
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
-            st.info("Follow the link below for more visualisations")
+            st.info("📭Follow the link below for more visualisations")
             st.link_button("League of Graphs",
                            f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
 
