@@ -274,7 +274,7 @@ if run:
 
         # NOTE: STATS
         st.write("##")
-        st.header("📭Champions")
+        st.header("☕Champions")
         stats = ['totalDamageDealtToChampions', 'kills', 'deaths', 'assists']
 
         # Create a DataFrame with the aggregated data
@@ -301,7 +301,8 @@ if run:
         for col, (champ_name, data) in zip(columns, champions.items()):
             col.image(
                 f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
+
             col.write(f"Winrate {data['winrate']:.0f}%")
-            col.write(f":blue[{data['win']:.0f}]W - :red[{data['lose']:.0f}]L")
-            col.write(f"KDA {data['kda']:.1f}")
+            col.write(
+                f"KDA :green[{data['kda']:.1f}] :blue[{data['win']:.0f}]W - :red[{data['lose']:.0f}]L")
             col.write(f"Damage {data['totalDamageDealtToChampions']:,.0f}")
