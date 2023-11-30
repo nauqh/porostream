@@ -217,7 +217,7 @@ if run:
             losses = ranks['losses']
             st.subheader(f":blue[{wins}]W - :red[{losses}]L")
             st.write(
-                f"`Level`: {summoner['summonerLevel']} :green[{ranks['leaguePoints']}]LP")
+                f"`Level`: {summoner['summonerLevel']} - :green[{ranks['leaguePoints']}]LP")
             st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
         with r:
             st.image(f"img/rank/{ranks['tier']}.png", width=300)
