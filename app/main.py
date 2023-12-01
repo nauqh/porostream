@@ -201,27 +201,43 @@ if run:
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
             st.link_button("Summoner Profile",
                            f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{name}-{tag}")
-        with m:
-            queue = {
-                'RANKED_SOLO_5x5': 'Soloqueue',
-                'RANKED_FLEX_SR': 'Ranked Flex'
-            }
-            st.write(f"""<span style='
-                    font-weight: 200; font-size: 1rem'>{ranks['tier'].capitalize()} {ranks['rank']} {queue[ranks['queueType']]}</span>""",
-                     unsafe_allow_html=True)
-            st.write(f"""<span style='
-                    font-family: Recoleta-Regular; font-weight: 400;
-                    font-size: 2.5rem'>{name}</span>""",
-                     unsafe_allow_html=True)
+        if ranks:
+            with m:
+                queue = {
+                    'RANKED_SOLO_5x5': 'Soloqueue',
+                    'RANKED_FLEX_SR': 'Ranked Flex'
+                }
+                st.write(f"""<span style='
+                        font-weight: 200; font-size: 1rem'>{ranks['tier'].capitalize()} {ranks['rank']} {queue[ranks['queueType']]}</span>""",
+                         unsafe_allow_html=True)
+                st.write(f"""<span style='
+                        font-family: Recoleta-Regular; font-weight: 400;
+                        font-size: 2.5rem'>{name}</span>""",
+                         unsafe_allow_html=True)
 
-            wins = ranks['wins']
-            losses = ranks['losses']
-            st.subheader(f":blue[{wins}]W - :red[{losses}]L")
-            st.write(
-                f"`Level`: {summoner['summonerLevel']} - :green[{ranks['leaguePoints']}]LP")
-            st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
-        with r:
-            st.image(f"img/rank/{ranks['tier']}.png", width=300)
+                wins = ranks['wins']
+                losses = ranks['losses']
+                st.subheader(f":blue[{wins}]W - :red[{losses}]L")
+                st.write(
+                    f"`Level`: {summoner['summonerLevel']} - :green[{ranks['leaguePoints']}]LP")
+                st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
+            with r:
+                st.image(f"img/rank/{ranks['tier']}.png", width=300)
+        else:
+            with m:
+                st.write(f"""<span style='
+                        font-weight: 200; font-size: 1rem'>UNRANKED</span>""",
+                         unsafe_allow_html=True)
+                st.write(f"""<span style='
+                        font-family: Recoleta-Regular; font-weight: 400;
+                        font-size: 2.5rem'>{name}</span>""",
+                         unsafe_allow_html=True)
+                st.subheader(f":blue[0]W - :red[0]L")
+                st.write(
+                    f"`Level`: {summoner['summonerLevel']} - :green[0]LP")
+                st.write(f"`Winrate`: N/A")
+            with r:
+                st.image(f"img/rank/IRON.png", width=300)
 
         # NOTE: STATS
         st.write("##")
