@@ -11,7 +11,7 @@
 
 ![Poro](img/poros.jpg)
 
-Porobot is a compact system for gathering and organizing game statistics data from [Riot API](https://developer.riotgames.com/).
+Porostream is a compact system for gathering and organizing game statistics data from [Riot API](https://developer.riotgames.com/).
 
 In short, it allows you to:
 
@@ -20,7 +20,7 @@ In short, it allows you to:
 * Utilize various tools to model and analyze the behavioral data.
 * Generate reports and deploy an online dashboard for convenient management.
 
-## Porobot Techstack 101
+## Porostream Techstack 101
 
 ![Sample](img/sample.png)
 
@@ -31,41 +31,14 @@ To briefly explain these four sub-systems:
 * **[Extractor][extractor]** employs `Pydantic` to validate the integrity and quality of the extracted Riot data through customizable data quality checks and adherence to expected schema and format.
 * **[Storage][storage]** relies on `SQLite` as a robust and feature-rich database system for persistent storage of Riot and Discord data, while leveraging `SQLAlchemy` as the ORM tool for simplified interaction with the database.
 * **[Analytics][analytics]** employs `Plotly` for creating interactive and visually appealing data visualizations, `Pandas` for data transformation and analysis, and `Discord` for deploying intuitive and user-friendly dashboards to explore and analyze Riot data.
-* **[Application][app]** utilizes `Hikari` as the library for building a Discord bot, providing a powerful and efficient framework for interacting with the `Discord API` and creating engaging and interactive experiences for users.
-
-## Instalation
-
-Local hosting of Porobot is also possible
-
-Create a `.env` file to store the application authentication token and guild ids
-
-```sh
-TOKEN = BOT_TOKEN
-GUILD = DISCORD_SERVER_ID
-STDOUT_CHANNEL_ID = OUTPUT_CHANEL_ID
-VOICE_CHANNEL_ID = VOICE_CHANNEL_ID
-RIOT = RIOT_TOKEN
-```
-
-Install dependencies:
-
-```sh
-$ pip install -r requirements.txt
-```
-
-Start the bot
-
-```sh
-$ python -m tiamut 
-```
+* **[Application][app]** utilizes `Streamlit` as the library for building a data science web app, providing a powerful and efficient framework for interacting with `Riot API` and creating engaging and interactive experiences for users.
 
 ## Documentation
 
-Since Porobot is built on the basis of `Hikari` library, it is essential to look for the library documentation for further implementation. 
+Since Porostream is built on the basis of `RiotAPI` library, it is essential to look for the library documentation for further implementation. 
 
 - `RiotAPI`: https://developer.riotgames.com/
-- `Hikari`: https://www.hikari-py.dev/
-- `Lightbulb`: https://hikari-lightbulb.readthedocs.io/en/latest/
+- `Streamlit`: https://docs.streamlit.io/
 
 [orchestrator]: https://www.prefect.io/
 [extractor]: https://developer.spotify.com/documentation/web-api
