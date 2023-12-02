@@ -1,13 +1,9 @@
 # Porostream - League of Legends Dashboard 
 
-![Version](https://img.shields.io/badge/Latest_Version-V1.0.0-808080?style=for-the-badge)
-
-![Python](https://img.shields.io/badge/Made%20With-Python%203.11-blue.svg?style=for-the-badge&logo=Python&logoColor=white)
+![Python](https://img.shields.io/badge/python%203.10-3670A0?style=for-the-badge&logo=python&logoColor=fafafa)
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
-
-
 
 **Update** (2 Dec 2023): Visit the web application at [Porostream](https://porostream.streamlit.app/)
 
