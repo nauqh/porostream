@@ -71,15 +71,6 @@ Since Porobot is built on the basis of `Hikari` library, it is essential to look
 - `Hikari`: https://www.hikari-py.dev/
 - `Lightbulb`: https://hikari-lightbulb.readthedocs.io/en/latest/
 
-## Contributors
-
-- [x] Nauqh - [@nauqh](https://github.com/nauqh) 
-
-- [x] Peter - [@bachtran02](https://github.com/bachtran02)
-
-- [x] Tuanardo - [@anhtuan18602](https://github.com/anhtuan18602) 
-
-
 [orchestrator]: https://www.prefect.io/
 [extractor]: https://developer.spotify.com/documentation/web-api
 [storage]: https://www.postgresql.org/
