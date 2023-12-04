@@ -153,8 +153,6 @@ if run:
     }
     TOKEN = settings.TOKEN
     try:
-        st.subheader(f"⌛Extracting data for `{name}`")
-
         puuid = get_puuid(TOKEN, name, tag)
         summoner = get_info(TOKEN, puuid, region)
         ranks = get_rank(TOKEN, summoner, region)
@@ -190,8 +188,9 @@ if run:
         #         st.success("✅ Submitted application")
         st.error("🍎Summoner not found")
     else:
-        match_df, player_df = gather_data(TOKEN, puuid, ids)
-        stats = transform(match_df, player_df)
+        with st.spinner(f"⌛Extracting data for `{name}`"):
+            match_df, player_df = gather_data(TOKEN, puuid, ids)
+            stats = transform(match_df, player_df)
 
         # NOTE: PROFILE
         st.write("##")
