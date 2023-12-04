@@ -191,7 +191,6 @@ if run:
         with st.spinner(f"⌛Extracting data for `{name}`"):
             match_df, player_df = gather_data(TOKEN, puuid, ids)
             stats = transform(match_df, player_df)
-
         # NOTE: PROFILE
         st.write("##")
         l, m, r = st.columns([1, 1, 1])
