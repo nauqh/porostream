@@ -170,7 +170,6 @@ def graph_dmgpersonal(matchdf, playerdf):
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-    # common_params = dict(mode='lines+markers', hovertemplate='%{y}')
 
     fig.add_trace(go.Scatter(x=matchdf['gameCreation'], y=matchdf['CSperMin'],
                              name="CSperMin", hovertemplate='%{y:.1f}'), secondary_y=True)
@@ -178,10 +177,6 @@ def graph_dmgpersonal(matchdf, playerdf):
     fig.add_trace(go.Scatter(x=matchdf['gameCreation'], y=matchdf['DmgperMin'],
                              name="DamageperMin", hovertemplate='%{y:,.2f}<br>Champion: %{customdata}',
                              customdata=playerdf['championName']))
-
-    bar_common_params = dict(name='GoldperMin', hovertemplate='%{y}',
-                             text=matchdf['GoldperMin'], textposition='outside', texttemplate='%{text:.2s}',
-                             marker=dict(color="#ffc300"))
 
     fig.add_trace(go.Bar(x=matchdf['gameCreation'], y=matchdf['GoldperMin'],
                          name='GoldperMin', hovertemplate='%{y:.1f}',

@@ -159,7 +159,7 @@ if run:
         ranks = ranks[0] if ranks else ranks
         queue_id = queues[mode]
 
-        ids = get_match_ids(TOKEN, puuid, 10, queue_id)
+        ids = get_match_ids(TOKEN, puuid, 20, queue_id)
     except KeyError:
         st.error("🍎Summoner not found")
     else:
