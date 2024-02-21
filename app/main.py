@@ -76,81 +76,84 @@ if password == "HYM":
     st.write("##")
     with open('team.json', 'r') as f:
         team = json.load(f)
+    _, center, _ = st.columns([1, 10, 1])
+    with center:
+        l, r = st.columns([1, 2])
+        with l:
+            st.header("📑Team ranked")
+        with r:
+            selected_player = st.selectbox(
+                'Summoner', list(team.keys()), index=4)
 
-    l, r = st.columns([1, 2])
-    with l:
-        st.header("📑Team ranked")
-    with r:
-        selected_player = st.selectbox(
-            'Summoner', list(team.keys()), index=4)
+        data = team[selected_player]
 
-    data = team[selected_player]
-    l, m, r = st.columns([1, 1, 1])
+        l, m, r = st.columns([1, 1, 1])
 
-    with l:
-        st.image(
-            f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
-        st.link_button("Summoner Profile",
-                       f"https://www.op.gg/summoners/vn/{data['name']}")
-    with m:
-        queue = {'RANKED_SOLO_5x5': 'Soloqueue',
-                 'RANKED_FLEX_SR': 'Ranked Flex'}
-        st.write(
-            f"""<span style='font-weight: 200; font-size: 1rem'>{data['tier']} {data['rank']} {queue[data['queue']]}</span>""", unsafe_allow_html=True)
-        st.write(
-            f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 2.5rem'>{data['name']}</span>""", unsafe_allow_html=True)
+        with l:
+            st.image(
+                f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{data['icon']}.png", width=250)
+            st.link_button("Summoner Profile",
+                           f"https://www.op.gg/summoners/vn/{data['name']}")
+        with m:
+            queue = {'RANKED_SOLO_5x5': 'Soloqueue',
+                     'RANKED_FLEX_SR': 'Ranked Flex'}
+            st.write(
+                f"""<span style='font-weight: 200; font-size: 1rem'>{data['tier']} {data['rank']} {queue[data['queue']]}</span>""", unsafe_allow_html=True)
+            st.write(
+                f"""<span style='font-family: Recoleta-Regular; font-weight: 400; font-size: 2.5rem'>{data['name']}</span>""", unsafe_allow_html=True)
 
-        wins, losses = data['wins'], data['losses']
-        st.subheader(f":blue[{wins}]W - :red[{losses}]L")
-        st.write(f"`Level`: {data['level']}")
-        st.write(f"`LP`: {data['lp']}")
-        st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
-    with r:
-        st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
+            wins, losses = data['wins'], data['losses']
+            st.subheader(f":blue[{wins}]W - :red[{losses}]L")
+            st.write(f"`Level`: {data['level']}")
+            st.write(f"`LP`: {data['lp']}")
+            st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
+        with r:
+            st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
 
     # NOTE: LEADERBOARD
-    st.write("##")
-    df = pd.read_csv("extract.csv")
+        st.write("##")
+        df = pd.read_csv("extract.csv")
 
-    st.header("⭐Leaderboard")
-    tab1, tab2 = st.tabs(
-        ["Damage on Champions", "Vision Score"])
+        st.header("⭐Leaderboard")
+        tab1, tab2 = st.tabs(
+            ["Damage on Champions", "Vision Score"])
 
-    with tab1:
-        l, r = st.columns([1, 1.5])
-        with l:
-            data = df.groupby('summonerName')[
-                'totalDamageDealtToChampions'].mean().to_dict()
-            fig = graph_dmg(data)
-            st.plotly_chart(fig, use_container_width=True)
+        with tab1:
+            l, r = st.columns([1, 1.5])
+            with l:
+                data = df.groupby('summonerName')[
+                    'totalDamageDealtToChampions'].mean().to_dict()
+                fig = graph_dmg(data)
+                st.plotly_chart(fig, use_container_width=True)
 
-        with r:
-            tru = df.groupby('summonerName')[
-                'trueDamageDealtToChampions'].mean().to_dict()
-            phy = df.groupby('summonerName')[
-                'physicalDamageDealtToChampions'].mean().to_dict()
-            mag = df.groupby('summonerName')[
-                'magicDamageDealtToChampions'].mean().to_dict()
+            with r:
+                tru = df.groupby('summonerName')[
+                    'trueDamageDealtToChampions'].mean().to_dict()
+                phy = df.groupby('summonerName')[
+                    'physicalDamageDealtToChampions'].mean().to_dict()
+                mag = df.groupby('summonerName')[
+                    'magicDamageDealtToChampions'].mean().to_dict()
 
-            names = list(tru.keys())
-            physicals = list(phy.values())
-            trues = list(tru.values())
-            magics = list(mag.values())
-            fig = graph_dmgproportion(names, trues, physicals, magics)
-            st.plotly_chart(fig, use_container_width=True)
-    with tab2:
-        l, r = st.columns([1, 1])
-        with l:
-            data = df.groupby('summonerName')['visionScore'].mean().to_dict()
-            fig = graph_vision(data)
-            st.plotly_chart(fig, use_container_width=True)
-        with r:
-            st.subheader("What's a good vision score?")
-            st.write(
-                "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
-            st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
-            fig = graph_winrate(df)
-            st.plotly_chart(fig, use_container_width=True)
+                names = list(tru.keys())
+                physicals = list(phy.values())
+                trues = list(tru.values())
+                magics = list(mag.values())
+                fig = graph_dmgproportion(names, trues, physicals, magics)
+                st.plotly_chart(fig, use_container_width=True)
+        with tab2:
+            l, r = st.columns([1, 1])
+            with l:
+                data = df.groupby('summonerName')[
+                    'visionScore'].mean().to_dict()
+                fig = graph_vision(data)
+                st.plotly_chart(fig, use_container_width=True)
+            with r:
+                st.subheader("What's a good vision score?")
+                st.write(
+                    "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
+                st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
+                fig = graph_winrate(df)
+                st.plotly_chart(fig, use_container_width=True)
 
 if run:
     if region is None:
@@ -314,14 +317,16 @@ if run:
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
-            l, r = st.columns([1.2, 1])
+            l, r = st.columns([1, 1])
             with l:
+                st.markdown("##")
                 fig, role = graph_role_dist(player_df)
                 st.plotly_chart(fig, use_container_width=True)
             with r:
-                st.markdown(
-                    f"It appears that you predominantly fulfill the `{role}` role.")
+                st.subheader("Understand your role")
                 st.markdown(roles[role])
+                fig = graph_winrate(player_df)
+                st.plotly_chart(fig, use_container_width=True)
 
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)

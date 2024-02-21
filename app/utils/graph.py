@@ -84,11 +84,12 @@ def graph_winrate(df):
         ))
 
     fig.update_layout(
-        title='Blue / Red Winrate', title_font_size=20,
+        title='Winrate by side', title_font_size=18,
+        margin=dict(t=30, l=0, r=0, b=30),
         showlegend=False,
         hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
         xaxis=dict(title='Win Rate (%)'),
-        height=300
+        height=200
     )
 
     return fig
@@ -201,8 +202,7 @@ def graph_role_dist(df):
 
     role = role_counts.idxmax()
 
-    colors = ['#b9fbc0', '#98f5e1', '#8eecf5',
-              '#90dbf4', '#a3c4f3', '#cfbaf0', 'f1c0e8']
+    colors = ['#ffdd00', '#ffc300', '#ff9500']
 
     labels = role_counts.index.astype(str).str.capitalize()
 
@@ -214,11 +214,10 @@ def graph_role_dist(df):
                       marker=dict(colors=colors, line=dict(color='#000', width=1)))
 
     fig.update_layout(
-        title='Roles distribution', title_font_size=25,
-        margin=dict(t=40, l=0, r=0, b=30),
+        title='Roles distribution', title_font_size=18,
+        margin=dict(t=40, l=0, r=0, b=0),
         legend=dict(
             x=0,
-            y=1,
-            font=dict(size=15)
-        ), height=400)
+            y=1
+        ), height=350)
     return fig, role.capitalize()
