@@ -276,11 +276,14 @@ if run:
                     f"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{name}_0.jpg")
             with r:
                 st.write(f"""
-                        <h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 2rem; text-align: center;color:#ffc300'>{champion['name']} - {champion['title']}</h3>
+                        <h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 2rem; text-align: center;color:#ffc300'>{champion['name']}</h3>
                         """, unsafe_allow_html=True)
                 st.write(
                     f"{champion['blurb']}", unsafe_allow_html=True)
-                st.write(f"`Role`: {', '.join(champion['tags'])}")
+                st.write(
+                    f"`Role`: {', '.join(champion['tags'])}"
+                    f"`Title`: {{champion['title']}}"
+                )
 
             # NOTE: STATS
             st.write("##")
