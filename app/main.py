@@ -18,7 +18,7 @@ roles = {
 
     "Mid": "Mid laners are playmakers with mechanical prowess, map awareness, and game knowledge. They farm minions, roam, and excel in burst or control champions. Vision control, positioning, and understanding matchups are vital for success.",
 
-    "ADC": "ADC players provide consistent damage in team fights, relying on positioning and mechanical skill. They navigate the laning phase safely, farm efficiently, and synergize with their support for trades and kills. Map awareness helps them avoid ganks and rotations.",
+    "Adc": "Adc players provide consistent damage in team fights, relying on positioning and mechanical skill. They navigate the laning phase safely, farm efficiently, and synergize with their support for trades and kills. Map awareness helps them avoid ganks and rotations.",
 
     "Support": "Support players offer utility, vision control, and protection for their team. They excel in map awareness, communication, and adaptability, adjusting their playstyles and item builds as needed. Positioning and timing are crucial for landing crowd control and protecting carries."
 }
@@ -276,66 +276,56 @@ if run:
             with r:
                 st.write(
                     f"""<h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 1.5rem; text-align: center;color:#ffc300'>{champion['title']}</h3>
-                            <h1 style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem; text-align: center; color:#ffdd00'>{champion['name']}</h1>""", unsafe_allow_html=True)
+                            <h3 style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem; text-align: center; color:#ffdd00'>{champion['name']}</h3>""", unsafe_allow_html=True)
                 st.write(
                     f"""<span style='margin: 0 2rem'>{champion['blurb']}</span>""", unsafe_allow_html=True)
                 st.write(f":blue[ROLE:] {', '.join(champion['tags'])}")
 
             # NOTE: STATS
             st.write("##")
-            st.header(f"📌Last {games} games")
+            st.header(f"📑Games statistics")
 
-            l, m, r = st.columns([1, 1, 1])
-            with l:
-                st.subheader("🎯Games")
-                st.subheader(
-                    f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L")
-            with m:
-                st.subheader("🏆Winrates")
-                st.subheader(f"{(stats['wins']/10)*100:.1f} %")
-            with r:
-                st.subheader("⚔️KDA")
-                st.subheader(
-                    f"{stats['kills']:.1f}/{stats['deaths']:.1f}/{stats['assists']:.1f}")
+            columns_data = {
+                "🎯Games": f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L",
+                "🏆Winrates": f"{(stats['wins'] / 10) * 100:.1f} %",
+                "⚔️KDA": f"{stats['kills']:.1f}/{stats['deaths']:.1f}/{stats['assists']:.1f}",
+                "🥊Damage": f"{stats['dmg']:,.0f}",
+                "👑Pentakills": stats['penta'],
+                "💡Vision": f"{stats['vision']:.1f}",
+                "⛏️CSperMin": stats['cspermin'],
+                "🥷Objectives": f"Max {stats['objsStolen']} stolen",
+                "☁️Time alive": f"Longest {int(stats['timealive'])} min"
+            }
 
-            l, m, r = st.columns([1, 1, 1])
-            with l:
-                st.subheader("🥊Damage")
-                st.subheader(f"{stats['dmg']:,.0f}")
-            with m:
-                st.subheader("👑Pentakills")
-                st.subheader(stats['penta'])
-            with r:
-                st.subheader("💡Vision")
-                st.subheader(f"{stats['vision']:.1f}")
-
-            l, m, r = st.columns([1, 1, 1])
-            with l:
-                st.subheader("⛏️CSperMin")
-                st.subheader(stats['cspermin'])
-            with m:
-                st.subheader("🥷Objectives")
-                st.subheader(f"Max {stats['objsStolen']} stolen")
-            with r:
-                st.subheader("☁️Time alive")
-                st.subheader(f"Longest {int(stats['timealive'])} min")
+            for i in range(0, len(columns_data), 3):
+                l, m, r = st.columns([1, 1, 1])
+                with l:
+                    title, value = list(columns_data.items())[i]
+                    st.subheader(title)
+                    st.subheader(value)
+                with m:
+                    title, value = list(columns_data.items())[i + 1]
+                    st.subheader(title)
+                    st.subheader(value)
+                with r:
+                    title, value = list(columns_data.items())[i + 2]
+                    st.subheader(title)
+                    st.subheader(value)
 
         # NOTE: Statistics
             st.markdown("##")
-            l, r = st.columns([1, 1.2])
+            st.markdown("##")
+            fig = graph_personal(match_df, player_df)
+            st.plotly_chart(fig, use_container_width=True)
+
+            l, r = st.columns([1, 1])
             with l:
                 fig, role = graph_role_dist(player_df)
                 st.plotly_chart(fig, use_container_width=True)
             with r:
-                st.markdown("""
-                        ### Role distribtions
-                        """, unsafe_allow_html=True)
                 st.markdown(
                     f"It appears that you predominantly fulfill the `{role}` role.")
                 st.markdown(roles[role])
-
-            fig = graph_personal(match_df, player_df)
-            st.plotly_chart(fig, use_container_width=True)
 
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)

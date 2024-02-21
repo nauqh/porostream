@@ -195,7 +195,8 @@ def graph_dmgpersonal(matchdf, playerdf):
 
 
 def graph_role_dist(df):
-    df['role'] = df['role'].replace({'NONE': 'JUNGLE', 'SOLO': 'TOP'})
+    df['role'] = df['role'].replace(
+        {'NONE': 'JUNGLE', 'SOLO': 'TOP', 'CARRY': 'ADC'})
     role_counts = df['role'].value_counts()
 
     role = role_counts.idxmax()
@@ -213,8 +214,8 @@ def graph_role_dist(df):
                       marker=dict(colors=colors, line=dict(color='#000', width=1)))
 
     fig.update_layout(
-        title='',
-        margin=dict(t=30, l=0, r=0, b=30),
+        title='Roles distribution', title_font_size=25,
+        margin=dict(t=40, l=0, r=0, b=30),
         legend=dict(
             x=0,
             y=1,
