@@ -30,11 +30,11 @@ with center:
     st.markdown("""
                 <h1 style='
                 font-family: "Inconsolata"; font-weight: 400; color: #ffc300;
-                font-size: 3rem'>How Bad Is Your League</h1>""",
+                font-size: 3.5rem'>How Bad Is Your League</h1>""",
                 unsafe_allow_html=True)
     st.markdown("""<h3 style='
                 font-family: "Inconsolata"; font-weight: 400;
-                font-size: 1.4rem'>Our sophisticated A.I. judges your awful gameplay</h3>""",
+                font-size: 1.5rem'>Our sophisticated A.I. judges your awful gameplay</h3>""",
                 unsafe_allow_html=True)
     """
     ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=fafafa)
@@ -291,8 +291,8 @@ if run:
                 "⚔️KDA": f"{stats['kills']:.1f}/{stats['deaths']:.1f}/{stats['assists']:.1f}",
                 "🥊Damage": f"{stats['dmg']:,.0f}",
                 "👑Pentakills": stats['penta'],
-                "💡Vision": f"{stats['vision']:.1f}",
-                "⛏️CSperMin": stats['cspermin'],
+                "👁️Vision": f"{stats['vision']:.1f}",
+                "🧑‍🌾CSperMin": stats['cspermin'],
                 "🥷Objectives": f"Max {stats['objsStolen']} stolen",
                 "☁️Time alive": f"Longest {int(stats['timealive'])} min"
             }
