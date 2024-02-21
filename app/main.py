@@ -278,11 +278,9 @@ if run:
                 st.write(f"""
                         <h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 2rem; text-align: center;color:#ffc300'>{champion['name']}</h3>
                         """, unsafe_allow_html=True)
-                st.write(
-                    f"{champion['blurb']}", unsafe_allow_html=True)
-                st.write(
-                    f"`Role`: {', '.join(champion['tags'])}\n`Title`: {champion['title']}"
-                )
+                st.markdown(f"{champion['blurb']}")
+                st.markdown(f"`Role`: {', '.join(champion['tags'])}")
+                st.markdown(f"`Title`: {champion['title']}")
 
             # NOTE: STATS
             st.write("##")
