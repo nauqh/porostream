@@ -182,8 +182,6 @@ if run:
         with center:
             with st.spinner(f"⌛Extracting data for `{name}`"):
                 match_df, player_df = gather_data(TOKEN, puuid, ids)
-                match_df.to_csv("matchdf.csv", index=False)
-                player_df.to_csv("playerdf.csv", index=False)
                 stats = transform(match_df, player_df)
         # NOTE: PROFILE
         st.write("##")
@@ -194,7 +192,7 @@ if run:
             st.link_button("Summoner Profile",
                            f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{name}-{tag}")
         with r:
-            _, a, b, _ = st.columns([1, 2, 1.5, 1])
+            _, a, b, _ = st.columns([1, 2, 2, 1])
             with a:
                 queue = {
                     'RANKED_SOLO_5x5': 'Soloqueue',
@@ -224,7 +222,7 @@ if run:
         _, center, _ = st.columns([1, 10, 1])
         with center:
             st.write("##")
-            st.header("🏆Champions")
+            st.subheader("🏆Victorious lineup")
             stat = ['totalDamageDealtToChampions',
                     'kills', 'deaths', 'assists']
 
@@ -263,28 +261,27 @@ if run:
 
             # NOTE: STATS
             st.write("##")
-            st.header("✒️Signature")
+            st.subheader("✨Signature champion")
 
             name = player_df['championName'].value_counts().idxmax()
             champion = requests.get(
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/data/en_US/champion/{name}.json").json()['data'][name]
 
-            l, r = st.columns([1.5, 1])
+            l, r = st.columns([1, 1])
             with l:
                 st.image(
                     f"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{name}_0.jpg")
             with r:
+                st.write(f"""
+                        <h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 2rem; text-align: center;color:#ffc300'>{champion['name']} - {champion['title']}</h3>
+                        """, unsafe_allow_html=True)
                 st.write(
-                    f"""<h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 1.5rem; text-align: center;color:#ffc300'>{champion['title']}</h3>
-                            <h3 style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem; text-align: center; color:#ffdd00'>{champion['name']}</h3>""", unsafe_allow_html=True)
-                st.write(
-                    f"""<span style='margin: 0 2rem'>{champion['blurb']}</span>""", unsafe_allow_html=True)
+                    f"{champion['blurb']}", unsafe_allow_html=True)
                 st.write(f":blue[ROLE:] {', '.join(champion['tags'])}")
 
             # NOTE: STATS
             st.write("##")
-            st.header(f"📑Games statistics")
-
+            st.subheader(f"📑Nexus insights")
             columns_data = {
                 "🎯Games": f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L",
                 "🏆Winrates": f"{(stats['wins'] / 10) * 100:.1f} %",
@@ -314,11 +311,10 @@ if run:
 
         # NOTE: Statistics
             st.markdown("##")
-            st.markdown("##")
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
-            l, r = st.columns([1, 1])
+            l, r = st.columns([1.2, 1])
             with l:
                 fig, role = graph_role_dist(player_df)
                 st.plotly_chart(fig, use_container_width=True)
