@@ -212,7 +212,7 @@ def graph_role_dist(df):
 
     role = role_counts.idxmax()
 
-    colors = ['#ffdd00', '#ffc300', '#ff9500']
+    colors = ['#ffdd00', '#ffc300', '#ff9500', '#ff7e00']
 
     labels = role_counts.index.astype(str).str.capitalize()
 
