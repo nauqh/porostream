@@ -149,7 +149,7 @@ def graph_personal(matchdf, playerdf):
     fig.update_yaxes(title=None, showgrid=False)
     fig.update_yaxes(secondary_y=False,
                      range=[0, 10], showgrid=False)
-    fig.update_xaxes(title=None)
+    fig.update_xaxes(title=None, showticklabels=False)
 
     return fig
 
@@ -170,7 +170,6 @@ def graph_dmgpersonal(matchdf, playerdf):
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-
     fig.add_trace(go.Scatter(x=matchdf['gameCreation'], y=matchdf['CSperMin'],
                              name="CSperMin", hovertemplate='%{y:.1f}'), secondary_y=True)
 
@@ -190,6 +189,35 @@ def graph_dmgpersonal(matchdf, playerdf):
 
     fig.update_yaxes(title=None, showgrid=False)
     fig.update_yaxes(secondary_y=True, range=[0, 10], showgrid=False)
-    fig.update_xaxes(title=None)
+    fig.update_xaxes(title=None, showticklabels=False)
 
     return fig
+
+
+def graph_role_dist(df):
+    df['role'] = df['role'].replace({'NONE': 'JUNGLE', 'SOLO': 'TOP'})
+    role_counts = df['role'].value_counts()
+
+    role = role_counts.idxmax()
+
+    colors = ['#b9fbc0', '#98f5e1', '#8eecf5',
+              '#90dbf4', '#a3c4f3', '#cfbaf0', 'f1c0e8']
+
+    labels = role_counts.index.astype(str).str.capitalize()
+
+    fig = go.Figure(data=[go.Pie(labels=labels, values=role_counts.values, hole=0.4, sort=False,
+                                 direction='clockwise', pull=[0.1]*len(role_counts.index))])
+
+    fig.update_traces(name='', textinfo='none',
+                      hovertemplate='Role: %{label}<br>Percentage: %{percent}<extra></extra>',
+                      marker=dict(colors=colors, line=dict(color='#000', width=1)))
+
+    fig.update_layout(
+        title='',
+        margin=dict(t=30, l=0, r=0, b=30),
+        legend=dict(
+            x=0,
+            y=1,
+            font=dict(size=15)
+        ), height=400)
+    return fig, role.capitalize()

@@ -11,52 +11,65 @@ st.set_page_config(
     page_icon="img/favicon.png",
     layout="wide")
 
-# TODO: Sidebar
-with st.sidebar:
-    st.write("## 📝About the project")
-    st.markdown(
-        "Porostream lets you analyze your League of Legends history to give you a deeper understanding of your performance.")
+roles = {
+    "Top": "Top laners are resilient, versatile players requiring strong mechanical skills, patience, and adaptability to handle diverse matchups and shifting metas. They excel in isolated duels, contribute to split-pushing, and maintain map awareness for teleport plays.",
 
-# NOTE: SEARCH INPUT
-with st.sidebar:
-    st.header("🔍Search summoner")
-    values = st.text_input(
-        "Enter name and tag separated by comma", "Obiwan ,HYM").split(',')
-    name, tag = [value.strip() for value in values]
-    region = st.selectbox(
-        'Choose your region',
-        ('VN2', 'OC1'), index=None)
-    if region == 'OC1':
-        mode = st.selectbox(
-            'Choose game mode',
-            ('Ranked Solo', 'Normal Draft'), index=None)
-    else:
-        mode = st.selectbox(
-            'Choose game mode',
-            ('Ranked Solo', 'Ranked Flex', 'Normal Blind', 'Normal Draft'), index=None)
+    "Jungle": "Junglers are strategic leaders with excellent map awareness and decision-making skills. They control objectives, gank lanes, counter-jungle, and adapt their tactics based on the flow of the game. Communication and anticipation of the opposing jungler's movements are crucial.",
 
-    run = st.button("Find out")
+    "Mid": "Mid laners are playmakers with mechanical prowess, map awareness, and game knowledge. They farm minions, roam, and excel in burst or control champions. Vision control, positioning, and understanding matchups are vital for success.",
+
+    "ADC": "ADC players provide consistent damage in team fights, relying on positioning and mechanical skill. They navigate the laning phase safely, farm efficiently, and synergize with their support for trades and kills. Map awareness helps them avoid ganks and rotations.",
+
+    "Support": "Support players offer utility, vision control, and protection for their team. They excel in map awareness, communication, and adaptability, adjusting their playstyles and item builds as needed. Positioning and timing are crucial for landing crowd control and protecting carries."
+}
+
 
 # TODO: Main
-st.markdown("""<h1 style='
-                font-family: Recoleta-Regular; font-weight: 400; color: #ffc300;
-                font-size: 3.5rem'>How Bad Is Your League</h1>""",
-            unsafe_allow_html=True)
+_, center, _ = st.columns([1, 10, 1])
+with center:
+    st.markdown("""
+                <h1 style='
+                font-family: "Inconsolata"; font-weight: 400; color: #ffc300;
+                font-size: 3rem'>How Bad Is Your League</h1>""",
+                unsafe_allow_html=True)
+    st.markdown("""<h3 style='
+                font-family: "Inconsolata"; font-weight: 400;
+                font-size: 1.4rem'>Our sophisticated A.I. judges your awful gameplay</h3>""",
+                unsafe_allow_html=True)
+    """
+    ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=fafafa)
+    ![Plotly](https://img.shields.io/badge/plotly%20-%2300416A.svg?&style=for-the-badge&logo=pandas&logoColor=white)
+    ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
+    """
+    st.image("img/poros.jpg")
 
-st.markdown("""<h3 style='
-                font-family: Recoleta-Regular; font-weight: 400; color: #F0E6D2;
-                font-size: 1.55rem'>Our sophisticated A.I. judges your awful gameplay</h3>""",
-            unsafe_allow_html=True)
-"""
-![Python](https://img.shields.io/badge/python%203.10-3670A0?style=for-the-badge&logo=python&logoColor=fafafa)
-![Plotly](https://img.shields.io/badge/plotly%20-%2300416A.svg?&style=for-the-badge&logo=pandas&logoColor=white)
-![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
-"""
-st.image("img/poros.jpg")
-st.write("##")
-st.subheader("🔒Team info is locked")
-password = st.text_input("Enter password to unlock team info", type="password")
+    st.subheader("🔒Team info is locked",  help="Admin only")
+    password = st.text_input(
+        "Enter password to unlock team info", type="password")
 
+    st.subheader("🔍Search summoner")
+    with st.form("summoner"):
+        st.markdown("Fill out your summoner information")
+        l, r = st.columns([2, 1])
+        with l:
+            name = st.text_input(
+                "Enter summoner name", "Obiwan", key="name")
+        with r:
+            tag = st.text_input(
+                "Enter tagline", "HYM")
+        region = st.selectbox(
+            'Choose your region',
+            ('VN2', 'OC1'), index=None)
+        games = st.slider('Number of matches', 5, 30, 15)
+        if region == 'OC1':
+            mode = st.selectbox(
+                'Choose game mode',
+                ('Ranked Solo', 'Normal Draft'), index=None)
+        else:
+            mode = st.selectbox(
+                'Choose game mode',
+                ('Ranked Solo', 'Ranked Flex', 'Quick Play', 'Normal Draft'), index=None)
+        run = st.form_submit_button("Find out")
 
 if password == "HYM":
     # NOTE: TEAM RANKED
@@ -147,7 +160,7 @@ if run:
     queues = {
         "Ranked Flex": 440,
         "Ranked Solo": 420,
-        "Normal Blind": 430,
+        "Quick Play": 490,
         "Normal Draft": 400,
         "ARAM": 450
     }
@@ -159,49 +172,119 @@ if run:
         ranks = ranks[0] if ranks else ranks
         queue_id = queues[mode]
 
-        ids = get_match_ids(TOKEN, puuid, 20, queue_id)
+        ids = get_match_ids(TOKEN, puuid, games, queue_id)
     except KeyError:
-        st.error("🍎Summoner not found")
+        _, center, _ = st.columns([1, 10, 1])
+        with center:
+            st.error("🍎Summoner not found")
     else:
-        with st.spinner(f"⌛Extracting data for `{name}`"):
-            match_df, player_df = gather_data(TOKEN, puuid, ids)
-            stats = transform(match_df, player_df)
+        _, center, _ = st.columns([1, 10, 1])
+        with center:
+            with st.spinner(f"⌛Extracting data for `{name}`"):
+                match_df, player_df = gather_data(TOKEN, puuid, ids)
+                match_df.to_csv("matchdf.csv", index=False)
+                player_df.to_csv("playerdf.csv", index=False)
+                stats = transform(match_df, player_df)
         # NOTE: PROFILE
         st.write("##")
-        l, m, r = st.columns([1, 1, 1])
+        _, l, r, _ = st.columns([0.5, 1, 4, 0.5])
         with l:
             st.image(
                 f"https://ddragon.leagueoflegends.com/cdn/13.23.1/img/profileicon/{summoner['profileIconId']}.png", width=250)
             st.link_button("Summoner Profile",
                            f"https://www.op.gg/summoners/{'vn' if region == 'VN2' else region}/{name}-{tag}")
-        with m:
-            queue = {
-                'RANKED_SOLO_5x5': 'Soloqueue',
-                'RANKED_FLEX_SR': 'Ranked Flex'
-            }
-            st.write(f"""<span style='
-                    font-weight: 200; font-size: 1rem'>{ranks['tier'].capitalize()} {ranks['rank']} {queue[ranks['queueType']]}</span>""",
-                     unsafe_allow_html=True)
-            st.write(f"""<span style='
-                    font-family: Recoleta-Regular; font-weight: 400;
-                    font-size: 2.5rem'>{name}</span>""",
-                     unsafe_allow_html=True)
-
-            wins = ranks['wins']
-            losses = ranks['losses']
-            st.subheader(f":blue[{wins}]W - :red[{losses}]L")
-            st.write(
-                f"`Level`: {summoner['summonerLevel']} - :green[{ranks['leaguePoints']}]LP")
-            st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
         with r:
-            st.image(f"img/rank/{ranks['tier']}.png", width=300)
+            _, a, b, _ = st.columns([1, 2, 1.5, 1])
+            with a:
+                queue = {
+                    'RANKED_SOLO_5x5': 'Soloqueue',
+                    'RANKED_FLEX_SR': 'Ranked Flex'
+                }
+                st.write(f"""<span style='
+                            font-weight: 200; font-size: 1rem'>{ranks['tier'].capitalize()} {ranks['rank']} {queue[ranks['queueType']]}</span>""",
+                         unsafe_allow_html=True)
+                st.write(f"""<span style='
+                            font-family: Recoleta-Regular; font-weight: 400;
+                            font-size: 2.5rem'>{name}</span>""",
+                         unsafe_allow_html=True)
+
+                wins = ranks['wins']
+                losses = ranks['losses']
+                st.subheader(f":blue[{wins}]W - :red[{losses}]L")
+                st.write(
+                    f"`Level`: {summoner['summonerLevel']}")
+                st.write(f"`LP`: :green[{ranks['leaguePoints']}]")
+                st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
+            with b:
+                st.markdown("##")
+                st.markdown("##")
+                st.image(f"img/rank/{ranks['tier']}.png", width=250)
 
         # NOTE: STATS
-        st.write("##")
-        st.header("📌Last 10 games")
-        tab1, tab2 = st.tabs(
-            ["Summary", "Metrics over Time"])
-        with tab1:
+        _, center, _ = st.columns([1, 10, 1])
+        with center:
+            st.write("##")
+            st.header("🏆Champions")
+            stat = ['totalDamageDealtToChampions',
+                    'kills', 'deaths', 'assists']
+
+            # Create a DataFrame with the aggregated data
+            agg_stats_df = player_df.groupby('championName')[stat].mean()
+            agg_stats_df['kda'] = (
+                agg_stats_df['kills'] + agg_stats_df['assists']) / agg_stats_df['deaths'].replace(0, 1)
+
+            # Create another DataFrame for winrate
+            agg_winrate_df = player_df.groupby('championName')[
+                'win'].value_counts().unstack(fill_value=0)
+            agg_winrate_df['winrate'] = (
+                agg_winrate_df[True] / (agg_winrate_df[True]+agg_winrate_df[False]))*100
+
+            # Include win and lose count columns
+            agg_winrate_df = agg_winrate_df.reset_index().rename(
+                columns={True: 'win', False: 'lose'})
+
+            # Merge the two DataFrames on 'championName'
+            agg_df = pd.merge(agg_stats_df, agg_winrate_df, on='championName')
+            champions = agg_df.set_index(
+                'championName').to_dict(orient='index')
+
+            columns = st.columns(5)
+
+            for idx, (col, (champ_name, data)) in enumerate(zip(columns, champions.items())):
+                if idx < 5:
+                    col.image(
+                        f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
+                    col.write(f""":yellow[Winrate {data['winrate']:.0f}%] 
+                                    :yellow[KDA :green[{data['kda']:.1f}] :blue[{data['win']:.0f}]W - :red[{data['lose']:.0f}]L] 
+                                    :yellow[Damage {data['totalDamageDealtToChampions']:,.0f}]
+                                    """)
+                else:
+                    break
+
+            # NOTE: STATS
+            st.write("##")
+            st.header("✒️Signature")
+
+            name = player_df['championName'].value_counts().idxmax()
+            champion = requests.get(
+                f"https://ddragon.leagueoflegends.com/cdn/13.23.1/data/en_US/champion/{name}.json").json()['data'][name]
+
+            l, r = st.columns([1.5, 1])
+            with l:
+                st.image(
+                    f"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{name}_0.jpg")
+            with r:
+                st.write(
+                    f"""<h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 1.5rem; text-align: center;color:#ffc300'>{champion['title']}</h3>
+                            <h1 style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem; text-align: center; color:#ffdd00'>{champion['name']}</h1>""", unsafe_allow_html=True)
+                st.write(
+                    f"""<span style='margin: 0 2rem'>{champion['blurb']}</span>""", unsafe_allow_html=True)
+                st.write(f":blue[ROLE:] {', '.join(champion['tags'])}")
+
+            # NOTE: STATS
+            st.write("##")
+            st.header(f"📌Last {games} games")
+
             l, m, r = st.columns([1, 1, 1])
             with l:
                 st.subheader("🎯Games")
@@ -213,7 +296,7 @@ if run:
             with r:
                 st.subheader("⚔️KDA")
                 st.subheader(
-                    f"{stats['kills']}/{stats['deaths']}/{stats['assists']}")
+                    f"{stats['kills']:.1f}/{stats['deaths']:.1f}/{stats['assists']:.1f}")
 
             l, m, r = st.columns([1, 1, 1])
             with l:
@@ -224,7 +307,7 @@ if run:
                 st.subheader(stats['penta'])
             with r:
                 st.subheader("💡Vision")
-                st.subheader(stats['vision'])
+                st.subheader(f"{stats['vision']:.1f}")
 
             l, m, r = st.columns([1, 1, 1])
             with l:
@@ -236,68 +319,40 @@ if run:
             with r:
                 st.subheader("☁️Time alive")
                 st.subheader(f"Longest {int(stats['timealive'])} min")
-        with tab2:
+
+        # NOTE: Statistics
+            st.markdown("##")
+            l, r = st.columns([1, 1.2])
+            with l:
+                fig, role = graph_role_dist(player_df)
+                st.plotly_chart(fig, use_container_width=True)
+            with r:
+                st.markdown("""
+                        ### Role distribtions
+                        """, unsafe_allow_html=True)
+                st.markdown(
+                    f"It appears that you predominantly fulfill the `{role}` role.")
+                st.markdown(roles[role])
+
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
+            st.markdown("""
+                        ### ⭐ Star the project on Github <iframe src="https://ghbtns.com/github-btn.html?user=nauqh&repo=porobot&type=star&count=true" width="150" height="20" title="GitHub"></iframe>
+                        """, unsafe_allow_html=True)
             st.info("📘Follow the link below for more visualisations")
             st.link_button("League of Graphs",
                            f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
 
-        # NOTE: STATS
-        st.write("##")
-        st.header("🏆Champions")
-        stats = ['totalDamageDealtToChampions', 'kills', 'deaths', 'assists']
 
-        # Create a DataFrame with the aggregated data
-        agg_stats_df = player_df.groupby('championName')[stats].mean()
-        agg_stats_df['kda'] = (
-            agg_stats_df['kills'] + agg_stats_df['assists']) / agg_stats_df['deaths'].replace(0, 1)
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
 
-        # Create another DataFrame for winrate
-        agg_winrate_df = player_df.groupby('championName')[
-            'win'].value_counts().unstack(fill_value=0)
-        agg_winrate_df['winrate'] = (
-            agg_winrate_df[True] / (agg_winrate_df[True]+agg_winrate_df[False]))*100
-
-        # Include win and lose count columns
-        agg_winrate_df = agg_winrate_df.reset_index().rename(
-            columns={True: 'win', False: 'lose'})
-
-        # Merge the two DataFrames on 'championName'
-        agg_df = pd.merge(agg_stats_df, agg_winrate_df, on='championName')
-        champions = agg_df.set_index('championName').to_dict(orient='index')
-
-        columns = st.columns(len(champions))
-
-        for col, (champ_name, data) in zip(columns, champions.items()):
-            col.image(
-                f'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/{champ_name}.png')
-            col.write(
-                f""":yellow[Winrate {data['winrate']:.0f}%] 
-                :yellow[KDA :green[{data['kda']:.1f}] :blue[{data['win']:.0f}]W - :red[{data['lose']:.0f}]L] 
-                :yellow[Damage {data['totalDamageDealtToChampions']:,.0f}]
-                """)
-
-        # NOTE: STATS
-        st.write("##")
-        st.header("✒️Signature")
-
-        name = player_df['championName'].value_counts().idxmax()
-        champion = requests.get(
-            f"https://ddragon.leagueoflegends.com/cdn/13.23.1/data/en_US/champion/{name}.json").json()['data'][name]
-
-        l, r = st.columns([1.5, 1])
-        with l:
-            st.image(
-                f"https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{name}_0.jpg")
-        with r:
-            st.write(
-                f"""<h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 1.5rem; text-align: center;color:#ffc300'>{champion['title']}</h3>
-                    <h1 style='font-family: Recoleta-Regular; font-weight: 400; font-size: 3rem; text-align: center; color:#ffdd00'>{champion['name']}</h1>""", unsafe_allow_html=True)
-            st.write(
-                f"""<span style='margin: 0 2rem'>{champion['blurb']}</span>""", unsafe_allow_html=True)
-            st.write(f":blue[ROLE:] {', '.join(champion['tags'])}")
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)

@@ -72,7 +72,7 @@ def gather_data(api_key, puuid, match_ids):
         matches.append(match_data['info'])
         player.append(player_data)
 
-    st.success("✅Extracted recent matches from summoner history")
+    # st.success("✅Extracted recent matches from summoner history")
     # Dataframe of all players of 5 games (5 x 10 records)
     match_df = pd.json_normalize(matches)
     # Dataframe of player of 5 games
