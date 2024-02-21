@@ -80,15 +80,25 @@ def graph_winrate(df):
             y=[f'{bar_color} side'],
             x=[win_rate],
             orientation='h',
-            hovertemplate='Win Rate: %{x}%'
+            hoverinfo='none'
         ))
+
+        # Add annotation for win rate on top of each bar
+        fig.add_annotation(
+            x=win_rate + 3,  # Adjust this value for proper positioning
+            y=f'{bar_color} side',
+            text=f'{win_rate:.0f}%',
+            showarrow=False,
+            font=dict(color='white', size=15),
+            align='left'
+        )
 
     fig.update_layout(
         title='Winrate by side', title_font_size=18,
         margin=dict(t=30, l=0, r=0, b=30),
         showlegend=False,
         hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
-        xaxis=dict(title='Win Rate (%)'),
+        xaxis=dict(title='Winrate (%)'),
         height=200
     )
 
