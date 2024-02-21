@@ -134,22 +134,39 @@ def graph_personal(matchdf, playerdf):
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-    metrics = ['VisionperMin', 'CSperMin', 'GoldperMin']
+   # Extract champion names
+    champion_names = playerdf['championName']
 
-    for metric in metrics:
-        trace = go.Scatter(
-            x=matchdf['gameCreation'],
-            y=round(matchdf[metric], 2),
-            mode='lines+markers',
-            name=metric,
-            hovertemplate='%{y:.1f}'
-        )
+    # Creating traces for VisionperMin
+    vision_trace = go.Scatter(
+        x=matchdf['gameCreation'],
+        y=round(matchdf['VisionperMin'], 2),
+        mode='lines+markers',
+        name='VisionperMin',
+        hovertemplate='%{y:.1f}' + '<br>' + 'Champion: ' + champion_names
+    )
 
-        # Assign the trace to the appropriate y-axis based on the metric
-        if metric == 'GoldperMin':
-            fig.add_trace(trace, secondary_y=True)
-        else:
-            fig.add_trace(trace)
+    # Creating traces for CSperMin
+    cs_trace = go.Scatter(
+        x=matchdf['gameCreation'],
+        y=round(matchdf['CSperMin'], 2),
+        mode='lines+markers',
+        name='CSperMin',
+        hovertemplate='%{y:.1f}'
+    )
+
+    # Creating traces for GoldperMin
+    gold_trace = go.Scatter(
+        x=matchdf['gameCreation'],
+        y=round(matchdf['GoldperMin'], 2),
+        mode='lines+markers',
+        name='GoldperMin',
+        hovertemplate='%{y:.1f}'
+    )
+
+    fig.add_trace(vision_trace)
+    fig.add_trace(cs_trace)
+    fig.add_trace(gold_trace, secondary_y=True)
 
     fig.update_layout(title="Laning statistics", title_font_size=25,
                       height=500,
