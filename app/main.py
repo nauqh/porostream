@@ -280,7 +280,7 @@ if run:
                         """, unsafe_allow_html=True)
                 st.write(
                     f"{champion['blurb']}", unsafe_allow_html=True)
-                st.write(f":blue[ROLE:] {', '.join(champion['tags'])}")
+                st.write(f"`Role`: {', '.join(champion['tags'])}")
 
             # NOTE: STATS
             st.write("##")

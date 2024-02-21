@@ -85,11 +85,11 @@ def graph_winrate(df):
 
         # Add annotation for win rate on top of each bar
         fig.add_annotation(
-            x=win_rate + 3,  # Adjust this value for proper positioning
+            x=win_rate + 3,
             y=f'{bar_color} side',
             text=f'{win_rate:.0f}%',
             showarrow=False,
-            font=dict(color='white', size=15),
+            font=dict(color='white', size=12),
             align='left'
         )
 
