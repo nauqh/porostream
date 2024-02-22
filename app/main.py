@@ -288,7 +288,7 @@ if run:
             st.subheader(f"📑Nexus insights")
             columns_data = {
                 "🎯Games": f"{stats['wins'] + stats['loses']}G {stats['wins']}W {stats['loses']}L",
-                "🏆Winrates": f"{(stats['wins'] / 10) * 100:.1f} %",
+                "🏆Winrates": f"{(stats['wins'] / (stats['wins'] + stats['loses'])) * 100:.1f} %",
                 "⚔️KDA": f"{stats['kills']:.1f}/{stats['deaths']:.1f}/{stats['assists']:.1f}",
                 "🥊Damage": f"{stats['dmg']:,.0f}",
                 "👑Pentakills": stats['penta'],
