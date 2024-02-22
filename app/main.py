@@ -214,7 +214,7 @@ if run:
                 st.subheader(f":blue[{wins}]W - :red[{losses}]L")
                 st.write(
                     f"`Level`: {summoner['summonerLevel']}")
-                st.write(f"`LP`: :green[{ranks['leaguePoints']}]")
+                st.write(f"`LP`: {ranks['leaguePoints']}")
                 st.write(f"`Winrate`: {((wins/(wins+losses))*100):.1f}%")
             with b:
                 st.markdown("##")

@@ -143,7 +143,7 @@ def graph_personal(matchdf, playerdf):
         y=round(matchdf['VisionperMin'], 2),
         mode='lines+markers',
         name='VisionperMin',
-        hovertemplate='%{y:.1f}' + '<br>' + 'Champion: ' + champion_names
+        hovertemplate='%{y:.1f}'
     )
 
     # Creating traces for CSperMin
@@ -161,7 +161,7 @@ def graph_personal(matchdf, playerdf):
         y=round(matchdf['GoldperMin'], 2),
         mode='lines+markers',
         name='GoldperMin',
-        hovertemplate='%{y:.1f}'
+        hovertemplate='%{y:.1f}' + '<br>' + 'Champion: ' + champion_names
     )
 
     fig.add_trace(vision_trace)
