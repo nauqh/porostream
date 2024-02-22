@@ -12,15 +12,15 @@ st.set_page_config(
     layout="wide")
 
 roles = {
-    "Top": "Top laners are resilient, versatile players requiring strong mechanical skills, patience, and adaptability to handle diverse matchups and shifting metas. They excel in isolated duels, contribute to split-pushing, and maintain map awareness for teleport plays.",
+    "Top": "**Top laners** are resilient, versatile players requiring strong mechanical skills, patience, and adaptability to handle diverse matchups and shifting metas. They excel in isolated duels, contribute to split-pushing, and maintain map awareness for teleport plays.",
 
-    "Jungle": "Junglers are strategic leaders with excellent map awareness and decision-making skills. They control objectives, gank lanes, counter-jungle, and adapt their tactics based on the flow of the game. Communication and anticipation of the opposing jungler's movements are crucial.",
+    "Jungle": "**Junglers** are strategic leaders with excellent map awareness and decision-making skills. They control objectives, gank lanes, counter-jungle, and adapt their tactics based on the flow of the game. Communication and anticipation of the opposing jungler's movements are crucial.",
 
-    "Mid": "Mid laners are playmakers with mechanical prowess, map awareness, and game knowledge. They farm minions, roam, and excel in burst or control champions. Vision control, positioning, and understanding matchups are vital for success.",
+    "Mid": "**Mid laners** are playmakers with mechanical prowess, map awareness, and game knowledge. They farm minions, roam, and excel in burst or control champions. Vision control, positioning, and understanding matchups are vital for success.",
 
-    "Adc": "Adc players provide consistent damage in team fights, relying on positioning and mechanical skill. They navigate the laning phase safely, farm efficiently, and synergize with their support for trades and kills. Map awareness helps them avoid ganks and rotations.",
+    "Adc": "**Adc players** provide consistent damage in team fights, relying on positioning and mechanical skill. They navigate the laning phase safely, farm efficiently, and synergize with their support for trades and kills. Map awareness helps them avoid ganks and rotations.",
 
-    "Support": "Support players offer utility, vision control, and protection for their team. They excel in map awareness, communication, and adaptability, adjusting their playstyles and item builds as needed. Positioning and timing are crucial for landing crowd control and protecting carries."
+    "Support": "**Support** players offer utility, vision control, and protection for their team. They excel in map awareness, communication, and adaptability, adjusting their playstyles and item builds as needed. Positioning and timing are crucial for landing crowd control and protecting carries."
 }
 
 
@@ -152,7 +152,7 @@ if password == "HYM":
                 st.write(
                     "A good vision score is `1.5x` the game length, a great vision score is more in the `2x` ballpark.")
                 st.write("That doesn't mean just spam wards everywhere because a high vision score does nothing if you don't have good vision on things that **MATTER**.")
-                fig = graph_winrate(df)
+                fig = graph_winrate_by_side(df)
                 st.plotly_chart(fig, use_container_width=True)
 
 if run:
@@ -174,6 +174,7 @@ if run:
         ranks = get_rank(TOKEN, summoner, region)
         ranks = ranks[0] if ranks else ranks
         queue_id = queues[mode]
+        league_of_graph = f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}"
 
         ids = get_match_ids(TOKEN, puuid, games, queue_id)
     except KeyError:
@@ -314,19 +315,25 @@ if run:
 
         # NOTE: GRAPHS
             st.markdown("##")
-            fig = graph_personal(match_df, player_df)
-            st.plotly_chart(fig, use_container_width=True)
-
             l, r = st.columns([1, 1])
             with l:
-                st.markdown("##")
+                st.markdown("<span style='font-weight: 800;font-size: 25px'>Roles and Winrates</span>",
+                            unsafe_allow_html=True)
                 fig, role = graph_role_dist(player_df)
                 st.plotly_chart(fig, use_container_width=True)
-            with r:
-                st.subheader("Understand your role")
                 st.markdown(roles[role])
-                fig = graph_winrate(player_df)
+            with r:
+                st.markdown("##")
+                st.markdown("##")
+                fig = graph_winrate_by_role(player_df)
                 st.plotly_chart(fig, use_container_width=True)
+                fig = graph_winrate_by_side(player_df)
+                st.plotly_chart(fig, use_container_width=True)
+                st.link_button("League of Graphs", league_of_graph)
+
+            st.markdown("##")
+            fig = graph_personal(match_df, player_df)
+            st.plotly_chart(fig, use_container_width=True)
 
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
@@ -334,9 +341,6 @@ if run:
             st.markdown("""
                         ### ⭐ Star the project on Github <iframe src="https://ghbtns.com/github-btn.html?user=nauqh&repo=porobot&type=star&count=true" width="150" height="20" title="GitHub"></iframe>
                         """, unsafe_allow_html=True)
-            st.info("📘Follow the link below for more visualisations")
-            st.link_button("League of Graphs",
-                           f"https://www.leagueofgraphs.com/summoner/{'vn' if region == 'VN2' else 'oce'}/{name}-{tag}")
 
 
 hide_streamlit_style = """

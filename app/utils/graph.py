@@ -63,46 +63,38 @@ def graph_dmgproportion(names, trues, physicals, magics):
     return fig
 
 
-def graph_winrate(df):
-    data = df['teamId'].value_counts().to_dict()
-    total_matches = len(df)
+def graph_winrate_by_side(df):
+    side_win_rates = df[['teamId', 'win']].groupby('teamId')[
+        'win'].mean() * 100
 
     fig = go.Figure()
 
-    for team_id, count in data.items():
-        win_rate = (count / total_matches) * 100
-
+    for team_id, win_rate in side_win_rates.items():
         # Encode color based on teamId
-        bar_color = 'Red' if team_id == 100 else 'Blue'
+        side = 'Red' if team_id == 100 else 'Blue'
 
         fig.add_trace(go.Bar(
             name='',
-            y=[f'{bar_color} side'],
+            y=[f'{side} side'],
             x=[win_rate],
             orientation='h',
-            hoverinfo='none'
+            hoverinfo='text',
+            hovertext=f'{win_rate:.0f}%',
+            width=0.7
         ))
 
-        # Add annotation for win rate on top of each bar
-        fig.add_annotation(
-            x=win_rate + 3,
-            y=f'{bar_color} side',
-            text=f'{win_rate:.0f}%',
-            showarrow=False,
-            font=dict(color='white', size=12),
-            align='left'
-        )
-
     fig.update_layout(
-        title='Winrate by side', title_font_size=18,
+        title='Winrate by Side',
+        title_font_size=18,
         margin=dict(t=30, l=0, r=0, b=30),
         showlegend=False,
         hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
-        xaxis=dict(title='Winrate (%)'),
+        xaxis_title=None,
         height=200
     )
 
     return fig
+
 # =======================================
 
 
@@ -110,6 +102,37 @@ def convert_timestamp_to_date(timestamp):
     date_object = datetime.utcfromtimestamp(timestamp)
     formatted_date = date_object.strftime('%b %d %H:%M')
     return formatted_date
+
+
+def graph_winrate_by_role(df):
+    # Replace roles
+    df['role'] = df['role'].replace(
+        {'NONE': 'Jungle', 'SOLO': 'Top', 'CARRY': 'Adc'})
+    role_win_rates = df[['role', 'win']].groupby('role')['win'].mean()
+    fig = go.Figure()
+
+    for role, win_rate in role_win_rates.items():
+        fig.add_trace(go.Bar(
+            name='',
+            y=[role.capitalize()],
+            x=[win_rate * 100],
+            orientation='h',
+            hoverinfo='text',
+            hovertext=f'{win_rate*100:.0f}%',
+            width=0.7
+        ))
+
+    fig.update_layout(
+        title='Winrate by Role',
+        title_font_size=18,
+        margin=dict(t=30, l=0, r=0, b=30),
+        showlegend=False,
+        hoverlabel=dict(bgcolor='#010A13', font_color='#fff'),
+        xaxis_title=None,
+        height=200
+    )
+
+    return fig
 
 
 def graph_personal(matchdf, playerdf):
@@ -182,7 +205,7 @@ def graph_personal(matchdf, playerdf):
     return fig
 
 
-def graph_dmgpersonal(matchdf, playerdf):
+def graph_dmgpersonal2(matchdf, playerdf):
     matchdf = matchdf.iloc[::-1].reset_index(drop=True)
     playerdf = playerdf.iloc[::-1].reset_index(drop=True)
     matchdf['DmgperMin'] = playerdf['totalDamageDealtToChampions'] / \
@@ -217,6 +240,40 @@ def graph_dmgpersonal(matchdf, playerdf):
 
     fig.update_yaxes(title=None, showgrid=False)
     fig.update_yaxes(secondary_y=True, range=[0, 10], showgrid=False)
+    fig.update_xaxes(title=None, showticklabels=False)
+
+    return fig
+
+
+def graph_dmgpersonal(matchdf, playerdf):
+    matchdf = matchdf.iloc[::-1].reset_index(drop=True)
+    playerdf = playerdf.iloc[::-1].reset_index(drop=True)
+    matchdf['DmgperMin'] = playerdf['totalDamageDealtToChampions'] / \
+        (matchdf['gameDuration'] / 60)
+    matchdf['GoldperMin'] = playerdf['goldEarned'] / \
+        (matchdf['gameDuration'] / 60)
+
+    matchdf['gameCreation'] = matchdf['gameCreation'] / 1000
+    matchdf['gameCreation'] = matchdf['gameCreation'].apply(
+        convert_timestamp_to_date)
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(x=matchdf['gameCreation'], y=matchdf['DmgperMin'],
+                             name="DamageperMin", hovertemplate='%{y:,.2f}<br>Champion: %{customdata}',
+                             customdata=playerdf['championName'], line_color='#ff7e00'))
+
+    fig.add_trace(go.Scatter(x=matchdf['gameCreation'], y=matchdf['GoldperMin'],
+                             name='GoldperMin',
+                             hovertemplate='%{y:.1f}',
+                             fill='tozeroy', line_color='#ffdd00'))
+
+    fig.update_layout(title="Damage by Gold", title_font_size=25, height=500,
+                      legend=dict(orientation="h", yanchor="top",
+                                  xanchor="center", x=0.5, y=1.1),
+                      hovermode='x unified')
+
+    fig.update_yaxes(title=None, showgrid=False)
     fig.update_xaxes(title=None, showticklabels=False)
 
     return fig
