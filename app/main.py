@@ -331,10 +331,12 @@ if run:
                 st.plotly_chart(fig, use_container_width=True)
                 st.link_button("League of Graphs", league_of_graph)
 
+            # Lane stats
             st.markdown("##")
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
+            # Gold by damage
             fig = graph_dmgpersonal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
 
