@@ -110,7 +110,7 @@ if password == "HYM":
         with r:
             st.image(f"img/rank/{data['tier'].upper()}.png", width=300)
 
-    # NOTE: LEADERBOARD
+        # NOTE: LEADERBOARD
         st.write("##")
         df = pd.read_csv("extract.csv")
 
@@ -221,7 +221,7 @@ if run:
                 st.markdown("##")
                 st.image(f"img/rank/{ranks['tier']}.png", width=250)
 
-        # NOTE: STATS
+        # NOTE: MOST USED CHAMPS
         _, center, _ = st.columns([1, 10, 1])
         with center:
             st.write("##")
@@ -262,7 +262,7 @@ if run:
                 else:
                     break
 
-            # NOTE: STATS
+            # NOTE: SIGNATURE CHAMP
             st.write("##")
             st.subheader("✨Signature champion")
 
@@ -279,8 +279,8 @@ if run:
                         <h3 style='font-family: Recoleta-Regular; font-weight: 200; font-size: 2rem; text-align: center;color:#ffc300'>{champion['name']}</h3>
                         """, unsafe_allow_html=True)
                 st.markdown(f"{champion['blurb']}")
-                st.markdown(f"`Role`: {', '.join(champion['tags'])}")
                 st.markdown(f"`Title`: {champion['title']}")
+                st.markdown(f"`Role`: {', '.join(champion['tags'])}")
 
             # NOTE: STATS
             st.write("##")
@@ -294,7 +294,7 @@ if run:
                 "👁️Vision": f"{stats['vision']:.1f}",
                 "🧑‍🌾CSperMin": stats['cspermin'],
                 "🥷Objectives": f"Max {stats['objsStolen']} stolen",
-                "☁️Time alive": f"Longest {int(stats['timealive'])} min"
+                "👩‍🚀Time Alive": f"Longest {int(stats['timealive'])} min"
             }
 
             for i in range(0, len(columns_data), 3):
@@ -312,7 +312,7 @@ if run:
                     st.subheader(title)
                     st.subheader(value)
 
-        # NOTE: Statistics
+        # NOTE: GRAPHS
             st.markdown("##")
             fig = graph_personal(match_df, player_df)
             st.plotly_chart(fig, use_container_width=True)
