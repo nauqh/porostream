@@ -5,7 +5,7 @@
 ![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)
 ![Riot Games](https://img.shields.io/badge/riotgames-D32936.svg?style=for-the-badge&logo=riotgames&logoColor=white)
 
-**Update** (2 Dec 2023): Visit the web application at [Porostream](https://porostream.streamlit.app/)
+**Update** (26 Feb 2024): Visit the web application at [Porostream](https://porostream.streamlit.app/)
 
 ## About the project
 
@@ -22,7 +22,7 @@ In short, it allows you to:
 
 ## Porostream Techstack 101
 
-![Sample](img/sample.png)
+![Sample](img/winrate.png)
 
 The repository structure follows the conceptual architecture of Porobot, which consists of four loosely-coupled sub-systems.
 
