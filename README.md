@@ -24,6 +24,8 @@ In short, it allows you to:
 
 ![Sample](img/winrate.png)
 
+![Sample](img/demonstrate.png)
+
 The repository structure follows the conceptual architecture of Porobot, which consists of four loosely-coupled sub-systems.
 
 To briefly explain these four sub-systems:
